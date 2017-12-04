@@ -1,17 +1,18 @@
 import React from 'react'
-import { StaticRouter as Router } from 'react-router-dom'
+import { StaticRouter as Router, matchPath } from 'react-router-dom'
 import Context from 'react-context-component'
 import { applyMiddleware, createStore } from 'redux'
 import { renderToString } from 'react-dom/server'
 import thunk from 'redux-thunk'
 
 import { rootReducer } from '../shared/ducks'
+import routes from '../shared/config/routes'
 import render from './render'
 import App from '../shared/App'
 
 const ErrorPage = () => <h1>Oops there was an error</h1>
 
-const reactApp = (req, res) => {
+const reactApp = async (req, res) => {
   const store = createStore(rootReducer, applyMiddleware(thunk))
   const context = {}
   let HTML
@@ -20,6 +21,16 @@ const reactApp = (req, res) => {
   const setStatus = (newStatus) => {
     status = newStatus
   }
+
+  const promises = []
+  routes.some(route => {
+    const match = matchPath(req.path, route)
+    if (match && route.component.fetchData)
+      promises.push(route.component.fetchData(store, route.component.defaultProps || {}))
+    return match
+  })
+
+  await Promise.all(promises)
 
   try {
     HTML = renderToString(

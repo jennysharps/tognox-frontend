@@ -6,11 +6,7 @@ import { fetchPage, getPage } from '../../ducks/pages'
 
 import WYSISWG from '../../components/WYSIWYG'
 
-const aboutSlug = 'about'
-
 export class About extends React.Component {
-  static fetchData = ({ dispatch }) => dispatch(fetchPage(aboutSlug))
-
   componentDidMount() {
     const store = this.context.store;
     About.fetchData(store)
@@ -40,6 +36,8 @@ export class About extends React.Component {
   }
 }
 
+About.fetchData = ({ dispatch }) => dispatch(fetchPage(About.slug))
+
 About.contextTypes = {
   store: PropTypes.shape({
     dispatch: PropTypes.func
@@ -51,14 +49,16 @@ About.propTypes = {
   title: PropTypes.string,
 }
 
+About.slug = 'about'
+
 const mapStateToProps = ({ pages }) => {
   const {
-    content: contentPayload = {},
-    title: titlePayload = {}
-  } = getPage(pages, aboutSlug) || {}
+    content,
+    title
+  } = getPage(pages, About.slug) || {}
   return {
-    content: contentPayload.rendered,
-    title: titlePayload.rendered
+    content,
+    title
   }
 }
 

@@ -1,12 +1,6 @@
 import React from 'react'
-
-import {
-  Route,
-  Switch
-} from 'react-router-dom'
-import About from './containers/AboutPage'
-import Home from './containers/HomePage'
-import PageNotFound from './containers/PageNotFoundPage'
+import { Route, Switch } from 'react-router-dom'
+import routes from './config/routes'
 import Header from './components/Header'
 
 const App = () => (
@@ -15,9 +9,12 @@ const App = () => (
       <div>
         <Header/>
         <Switch>
-          <Route exact path="/" component={Home}/>
-          <Route exact path="/about" component={About}/>
-          <Route component={PageNotFound}/>
+          {routes.map(route => (
+            <Route
+              key={new Date().getTime()}
+              {...route}
+            />
+          ))}
         </Switch>
       </div>
     )}/>
