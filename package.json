@@ -13,7 +13,9 @@
   "dependencies": {
     "express": "^4.15.3",
     "immutable": "^3.8.2",
+    "object-hash": "^1.2.0",
     "prop-types": "^15.5.10",
+    "query-string": "^5.0.1",
     "react": "^16.1.1",
     "react-context-component": "^0.0.3",
     "react-dom": "^16.1.1",
@@ -22,7 +24,8 @@
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "serialize-javascript": "^1.4.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",

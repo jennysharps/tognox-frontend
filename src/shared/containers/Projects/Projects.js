@@ -2,18 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { fetchProjects } from '../../ducks/projects'
+import { fetchProjects, getProjects } from '../../ducks/projects'
 import WYSIWYG from '../../components/WYSIWYG'
 
 export class Projects extends React.Component {
   componentDidMount() {
-    const store = this.context.store;
+    const store = this.context.store
     Projects.fetchData(store)
   }
 
-  renderProject = ({ id, title, excerpt }) => (
+  renderProject = ({ id, title, excerpt, slug }) => (
     <div key={id}>
-      <h2>{title}</h2>
+      <Link to={`/projects/${slug}`}>
+        <h2>{title}</h2>
+      </Link>
       <WYSIWYG content={excerpt}/>
     </div>
   )
@@ -31,8 +33,7 @@ export class Projects extends React.Component {
             Home
           </Link>
         </p>
-        {Object.values(projects)
-          .map(project => this.renderProject(project))}
+        {projects && projects.map(project => this.renderProject(project))}
       </div>
     )
   }
@@ -47,14 +48,17 @@ Projects.contextTypes = {
 }
 
 Projects.propTypes = {
-  projects: PropTypes.shape({
-    excerpt: PropTypes.string,
-    title: PropTypes.string
-  })
+  projects: PropTypes.arrayOf([
+    PropTypes.shape({
+      excerpt: PropTypes.string,
+      slug: PropTypes.string,
+      title: PropTypes.string
+    })
+  ])
 }
 
 const mapStateToProps = ({ projects }) => ({
-  projects
+  projects: getProjects(projects)
 })
 
 export default connect(mapStateToProps)(Projects)

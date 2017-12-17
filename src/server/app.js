@@ -13,42 +13,52 @@ import App from '../shared/App'
 const ErrorPage = () => <h1>Oops there was an error</h1>
 
 const reactApp = async (req, res) => {
-  const store = createStore(rootReducer, applyMiddleware(thunk))
-  const context = {}
-  let HTML
-  let status = 200
-
-  const setStatus = (newStatus) => {
-    status = newStatus
-  }
-
-  const promises = []
-  routes.some(route => {
-    const match = matchPath(req.path, route)
-    if (match && route.component.fetchData)
-      promises.push(route.component.fetchData(store, route.component.defaultProps || {}))
-    return match
-  })
-
-  await Promise.all(promises)
-
   try {
-    HTML = renderToString(
-      <Context setStatus={setStatus} store={store}>
-        <Router context={{}} location={req.url}>
-          <App />
-        </Router>
-      </Context>
-    )
-  } catch (error) {
-    HTML = renderToString(ErrorPage)
-    status = 500
-  }
+    const store = createStore(rootReducer, applyMiddleware(thunk))
+    const context = {}
+    let HTML
+    let status = 200
 
-  if (context.url) {
-    res.redirect(301, context.url)
-  } else {
-    res.status(status).send(render(HTML, store.getState()))
+    const setStatus = (newStatus) => {
+      status = newStatus
+    }
+
+    const promises = []
+    routes.some(route => {
+      const match = matchPath(req.path, route)
+      if (match && route.component.fetchData)
+        promises.push(route.component.fetchData(
+          store,
+          {
+            ...route.component.defaultProps || {},
+            match
+          }
+        ))
+      return match
+    })
+
+    await Promise.all(promises)
+
+    try {
+      HTML = renderToString(
+        <Context setStatus={setStatus} store={store}>
+          <Router context={{}} location={req.url}>
+            <App/>
+          </Router>
+        </Context>
+      )
+    } catch (error) {
+      HTML = renderToString(ErrorPage)
+      status = 500
+    }
+
+    if (context.url) {
+      res.redirect(301, context.url)
+    } else {
+      res.status(status).send(render(HTML, store.getState()))
+    }
+  } catch (error) {
+    console.log(error)
   }
 }
 

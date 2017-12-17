@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch'
-
+import { fetch, getEndpoint } from '../../utils/apiUtils'
 import { normalizePayloadItems } from '../../utils/payloadUtils'
 
 function normalizePage({
@@ -25,7 +24,7 @@ const LOAD   = 'tognox/pages/LOAD'
 export default function reducer(state = {}, { type, payload } = {}) {
   switch (type) {
     case LOAD: return {
-      ...(payload.length === 1 ? state : {}),
+      ...state,
       ...normalizePayloadItems(payload, normalizePage)
     }
 
@@ -41,23 +40,21 @@ export function loadPage(payload) {
   };
 }
 
-const apiRoot = 'http://localhost:8888/francescotonini/wp-json/wp/v2';
+const pagesApiEndpoint = getEndpoint('pages');
 
 // side effects, only as applicable
 // e.g. thunks, epics, etc
 export function fetchPage(slug) {
   return async (dispatch, getState) => {
     if (!getPage(getState().pages, slug)) {
-      await fetch(`${apiRoot}/pages?slug=${slug}`)
-        .then(response => response.json())
-        .then(data => dispatch(loadPage(data)))
+      await fetch(pagesApiEndpoint, { slug })
+        .then(({ data }) => dispatch(loadPage(data)))
     }
   }
 }
 
 // Selectors
 export function getPage(pages, slug) {
-  return Object
-    .values(pages)
+  return Object.values(pages)
     .find(({ id }) => pages[id].slug === slug)
 }

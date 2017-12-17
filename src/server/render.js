@@ -1,3 +1,5 @@
+import serialize from 'serialize-javascript'
+
 const DEV = process.env.NODE_ENV === 'development'
 const assetManifest = JSON.parse(process.env.REACT_APP_ASSET_MANIFEST || '{}')
 const bundleUrl = DEV ?
@@ -22,7 +24,7 @@ export default (component, preloadedState) => `
       <body>
         <div id="root">${component}</div>
         <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\\u003c')}
+          window.__PRELOADED_STATE__ = ${serialize(preloadedState, { isJSON: true })}
         </script>
         <script type="application/javascript" src="${bundleUrl}"></script>
       </body>
