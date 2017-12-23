@@ -9,19 +9,21 @@ const css = DEV ?
   '' : // in DEV the css is hot loaded
   `<link href="/${assetManifest['main.css']}" media="all" rel="stylesheet" />`
 
-export default (component, preloadedState) => `
+export default (component, preloadedState, helmet) => `
   <!DOCTYPE html>
-    <html lang="en">
+    <html ${helmet.htmlAttributes.toString()}>
       <head>
+        ${helmet.title.toString()}
+        ${helmet.meta.toString()}
+        ${helmet.link.toString()}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="theme-color" content="#000000">
         ${css}
         <link rel="manifest" href="/public/manifest.json">
         <link rel="shortcut icon" href="/public/favicon.ico">
-        <title>React App</title>
       </head>
-      <body>
+      <body ${helmet.bodyAttributes.toString()}>
         <div id="root">${component}</div>
         <script>
           window.__PRELOADED_STATE__ = ${serialize(preloadedState, { isJSON: true })}

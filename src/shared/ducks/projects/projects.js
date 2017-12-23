@@ -1,5 +1,3 @@
-import hash from 'object-hash'
-
 import { fetch, getCacheData, getEndpoint } from '../../utils/apiUtils'
 import { normalizePayloadItems } from '../../utils/payloadUtils'
 import { fetchTags, getTag } from '../tags/tags'

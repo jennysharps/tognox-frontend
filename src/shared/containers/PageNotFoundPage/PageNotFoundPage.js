@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 export const PageNotFound = (props, context = {}) => {
   if (context.setStatus) {
@@ -10,6 +10,7 @@ export const PageNotFound = (props, context = {}) => {
 
   return (
     <div>
+      <Helmet title="Page Not Found" />
       <h1>
         Page not found
       </h1>
@@ -20,7 +21,7 @@ export const PageNotFound = (props, context = {}) => {
   )
 }
 PageNotFound.contextTypes = {
-  setStatus: PropTypes.func.isRequired
+  setStatus: PropTypes.func
 }
 
 export default PageNotFound

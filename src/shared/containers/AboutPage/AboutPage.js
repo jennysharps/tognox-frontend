@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { fetchPage, getPage } from '../../ducks/pages'
 
 import WYSISWG from '../../components/WYSIWYG'
@@ -13,23 +14,13 @@ export class About extends React.Component {
   }
 
   render () {
-    const { content } = this.props;
+    const { content, title } = this.props;
 
     return (
       <div className="App-intro">
-        <p>
-          About page
-        </p>
-        <p>
-          <Link to={`/`}>
-            Home
-          </Link>
-        </p>
-        <p>
-          <Link to={`/aljlskaklksdkfaj falsflasd`}>
-            Go to non-existent page
-          </Link>
-        </p>
+        <Helmet title={title} />
+        <h2>{title}</h2>
+        <Link to="/projects">Projects</Link>
         <WYSISWG content={content} />
       </div>
     )

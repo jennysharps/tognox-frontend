@@ -1,4 +1,5 @@
 import About from '../containers/AboutPage'
+import ContactForm from '../components/ContactForm'
 import Home from '../containers/HomePage'
 import Project from '../containers/Project'
 import Projects from '../containers/Projects'
@@ -10,33 +11,51 @@ const routes = [
   {
     path: '/',
     component: Home,
-    exact: true
+    exact: true,
+    key: 'home'
   },
   {
     path: `/about`,
     component: About,
-    exact: true
+    exact: true,
+    key: 'about'
+  },
+  {
+    path: `/contact`,
+    component: ContactForm,
+    exact: true,
+    key: 'contact'
   },
   {
     path: `/projects`,
     component: Projects,
-    exact: true
+    exact: true,
+    key: 'projects'
   },
   {
     path: '/projects/:projectSlug',
-    component: Project
+    component: Project,
+    key: 'project'
   },
   {
     path: '/publications',
-    component: Publications
+    component: Publications,
+    key: 'publications'
+  },
+  {
+    path: '/resources',
+    component: Publications,
+    key: 'resources'
   },
   {
     path: '/tag/:tagSlug',
-    component: ProjectTag
+    component: ProjectTag,
+    key: 'tag'
   },
   {
     path: '*',
-    component: PageNotFound
+    component: PageNotFound,
+    key: '404'
   }
 ]
 

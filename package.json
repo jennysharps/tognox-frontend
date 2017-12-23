@@ -11,8 +11,10 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.15.3",
     "immutable": "^3.8.2",
+    "nodemailer": "^4.4.1",
     "object-hash": "^1.2.0",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.1",
@@ -20,6 +22,7 @@
     "react-context-component": "^0.0.3",
     "react-dom": "^16.1.1",
     "react-dom-server": "^0.0.5",
+    "react-helmet": "^5.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",

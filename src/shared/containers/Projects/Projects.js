@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { fetchProjects, getProjects } from '../../ducks/projects'
 import WYSIWYG from '../../components/WYSIWYG'
 
@@ -25,6 +26,7 @@ export class Projects extends React.Component {
 
     return (
       <div className="App-intro">
+        <Helmet title="Projects" />
         <p>
           Projects page
         </p>
@@ -48,13 +50,13 @@ Projects.contextTypes = {
 }
 
 Projects.propTypes = {
-  projects: PropTypes.arrayOf([
+  projects: PropTypes.arrayOf(
     PropTypes.shape({
       excerpt: PropTypes.string,
       slug: PropTypes.string,
       title: PropTypes.string
     })
-  ])
+  )
 }
 
 const mapStateToProps = ({ projects }) => ({

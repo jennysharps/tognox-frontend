@@ -1,6 +1,7 @@
 import React from 'react'
 import { StaticRouter as Router, matchPath } from 'react-router-dom'
 import Context from 'react-context-component'
+import { Helmet } from 'react-helmet'
 import { applyMiddleware, createStore } from 'redux'
 import { renderToString } from 'react-dom/server'
 import thunk from 'redux-thunk'
@@ -43,7 +44,7 @@ const reactApp = async (req, res) => {
       HTML = renderToString(
         <Context setStatus={setStatus} store={store}>
           <Router context={{}} location={req.url}>
-            <App/>
+            <App />
           </Router>
         </Context>
       )
@@ -55,7 +56,7 @@ const reactApp = async (req, res) => {
     if (context.url) {
       res.redirect(301, context.url)
     } else {
-      res.status(status).send(render(HTML, store.getState()))
+      res.status(status).send(render(HTML, store.getState(), Helmet.renderStatic()))
     }
   } catch (error) {
     console.log(error)

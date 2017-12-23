@@ -39,8 +39,6 @@ export class Publications extends React.Component {
 
 
   render () {
-    const { citations, years } = this.props;
-
     return (
       <div className="App-intro">
         <p>
@@ -61,7 +59,7 @@ Publications.contextTypes = {
 }
 
 Publications.propTypes = {
-  citations: PropTypes.shape(
+  citations: PropTypes.arrayOf(
     PropTypes.shape({
       rendered: PropTypes.string
     })

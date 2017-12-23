@@ -20,12 +20,27 @@ function normalizePage({
 // Actions
 const LOAD   = 'tognox/pages/LOAD'
 
+const initialState = {
+  cache: {},
+  pages: {}
+}
+
 // Reducer
-export default function reducer(state = {}, { type, payload } = {}) {
+export default function reducer(state = initialState, { cacheKey, type, payload } = {}) {
   switch (type) {
     case LOAD: return {
       ...state,
-      ...normalizePayloadItems(payload, normalizePage)
+      cache: {
+        ...state.cache,
+        [cacheKey]: {
+          id: cacheKey,
+          expiry: new Date().getTime() + 60 * 60 * 12 * 1000 // 12 hours
+        }
+      },
+      pages: {
+        ...state.pages,
+        ...normalizePayloadItems(payload, normalizePage)
+      }
     }
 
     default: return state
@@ -54,7 +69,11 @@ export function fetchPage(slug) {
 }
 
 // Selectors
-export function getPage(pages, slug) {
+export function getPage({ pages }, slug) {
   return Object.values(pages)
     .find(({ id }) => pages[id].slug === slug)
+}
+
+export function getPages({ pages }) {
+  return Object.values(pages)
 }

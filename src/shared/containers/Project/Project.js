@@ -2,14 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import WYSIWYG from '../../components/WYSIWYG'
+import { Helmet } from 'react-helmet'
 import { fetchProject, getProject } from '../../ducks/projects/projects'
+import PageNotFoundPage from '../../containers/PageNotFoundPage'
+import WYSIWYG from '../../components/WYSIWYG'
+
+const isRequiredDataAvailable = props => props.citations.length > 0
 
 export class Project extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: isRequiredDataAvailable(props)
+    }
+  }
+
+  async componentDidMount() {
     const { store } = this.context
     const props = this.props
-    Project.fetchData(store, props)
+    const { ready } = this.state
+    if (!ready) {
+      await Project.fetchData(store, props)
+      this.setState({ ready: true })
+    }
   }
 
   render () {
@@ -19,9 +34,26 @@ export class Project extends React.Component {
       tags,
       title
     } = this.props;
+    const { ready } = this.state
+
+    if (!ready) {
+      return (
+        <div>
+          <Helmet title="Loading..." />
+          <p>Loading...</p>
+        </div>
+      )
+    }
+
+    if (!isRequiredDataAvailable(this.props)) {
+      return (
+        <PageNotFoundPage />
+      )
+    }
 
     return (
       <div className="App-intro">
+        <Helmet title={title || 'Loading...'} />
         <p>
           Projects page
         </p>
@@ -53,6 +85,9 @@ export class Project extends React.Component {
                 {name}
               </Link>
             ))}
+            <Link to={`/tag/fake`}>
+              Fake
+            </Link>
           </div>
         }
       </div>

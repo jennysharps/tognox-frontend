@@ -1,16 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 import { fetchProjectsByTag, getProjectsByTag } from '../../ducks/projects'
 import { getTag } from '../../ducks/tags'
+import PageNotFoundPage from '../PageNotFoundPage'
 import WYSIWYG from '../../components/WYSIWYG'
 
+const isRequiredDataAvailable = props => !!props.name
+
 export class ProjectTag extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: isRequiredDataAvailable(props)
+    }
+  }
+
+  async componentDidMount() {
     const { store } = this.context
     const props = this.props
-    ProjectTag.fetchData(store, props)
+    const { ready } = this.state
+    if (!ready) {
+      await ProjectTag.fetchData(store, props)
+      this.setState({ ready: true })
+    }
   }
 
   renderProject = ({ id, title, excerpt, slug }) => (
@@ -24,26 +39,40 @@ export class ProjectTag extends React.Component {
 
   render () {
     const { name, projects } = this.props;
+    const { ready } = this.state;
+
+    if (!ready) {
+      return (
+        <div>
+          <Helmet title="Loading..." />
+          <p>Loading...</p>
+        </div>
+      )
+    }
+
+    if (!isRequiredDataAvailable(this.props)) {
+      return (
+        <PageNotFoundPage />
+      )
+    }
 
     return (
-      <div className="App-intro">
+      <div>
+        <Helmet title={`Tag: ${name}`} />
         <p>
           Projects tagged <strong>{name}</strong>
         </p>
-        <p>
-          <Link to={`/`}>
-            Home
-          </Link>
-        </p>
-        {Object.keys(projects)
-          .map(key => this.renderProject(projects[key]))}
+        {projects.length
+          ? projects.map(project => this.renderProject(project))
+          : <div>No projects found</div>
+        }
       </div>
     )
   }
 }
 
-ProjectTag.fetchData = ({ dispatch }, { match: { params: { tagSlug }} }) =>
-  dispatch(fetchProjectsByTag(tagSlug))
+ProjectTag.fetchData = async ({ dispatch }, { match: { params: { tagSlug }} }) =>
+  await dispatch(fetchProjectsByTag(tagSlug))
 
 ProjectTag.contextTypes = {
   store: PropTypes.shape({
@@ -56,11 +85,13 @@ ProjectTag.propTypes = {
     params: PropTypes.shape()
   }),
   name: PropTypes.string,
-  projects: PropTypes.shape({
-    excerpt: PropTypes.string,
-    slug: PropTypes.string,
-    title: PropTypes.string
-  })
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      excerpt: PropTypes.string,
+      slug: PropTypes.string,
+      title: PropTypes.string
+    })
+  )
 }
 
 const mapStateToProps = ({ projects, tags }, { match: { params: { tagSlug }} }) => {
