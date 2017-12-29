@@ -1,9 +1,6 @@
 'use strict';
 
-const path = require('path');
 const webpack = require('webpack');
-const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const paths = require('./paths');
 const nodeExternals = require('webpack-node-externals');
 const getClientEnvironment = require('./env');
@@ -16,12 +13,28 @@ const config = Object.assign({}, base)
 
 config.target = 'node'
 config.entry = './src/server'
-config.externals = [nodeExternals()] // / in order to ignore all modules in node_modules folder
+config.externals = [nodeExternals()] // in order to ignore all modules in node_modules folder
 config.output = {
   path: paths.serverBuild,
   filename: 'bundle.js',
   publicPath: '/'
 }
+
+config.module.rules = config.module.rules.map(rule => {
+  if (`${rule.test}`.includes('scss')) {
+    const styleLoader = require.resolve('style-loader')
+    const cssLoader = require.resolve('css-loader')
+    rule.loader = (rule.loader || [])
+      .filter(loader => loader.loader !== styleLoader) // style loader not used on server
+      .map((loader = {}) => {
+        if (loader.loader === cssLoader) {
+          loader.loader = require.resolve('css-loader/locals') // css modules requires locals loader on server
+        }
+        return loader
+      })
+  }
+  return rule
+})
 
 config.plugins = config.plugins.concat([
   // Makes some environment variables available to the JS code, for example:

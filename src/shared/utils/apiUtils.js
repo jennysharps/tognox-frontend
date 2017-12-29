@@ -1,5 +1,7 @@
 import isomorphicFetch from 'isomorphic-fetch'
 import hash from 'object-hash'
+import camelcaseKeys from 'camelcase-keys'
+import snakecaseKeys from 'snakecase-keys'
 import { stringify } from 'query-string'
 
 import { apiPaths, apiRoot } from '../config/endpoints'
@@ -8,21 +10,25 @@ function getQueryString(args) {
   return arguments ? `?${stringify(args)}` : ''
 }
 
-export function fetch(path, { page = 1, per_page = 10, ...restArgs } = {}) {
+export function fetch(path, { page = 1, perPage = 10, ...restArgs } = {}) {
   let meta
-  return isomorphicFetch(`${path}${getQueryString({ ...restArgs, page, per_page })}`)
+  const queryString = getQueryString(snakecaseKeys({ ...restArgs, page, perPage }))
+  return isomorphicFetch(`${path}${queryString}`)
     .then(response => {
       const total = response.headers.get('x-wp-total')
       const totalPages = response.headers.get('x-wp-totalpages')
       meta = {
-        limit: per_page,
+        limit: perPage,
         page,
         total,
         totalPages
       }
       return response.json()
     })
-    .then(data => ({ data, meta }))
+    .then(data => ({
+      data: camelcaseKeys(data, { deep: true }),
+      meta
+    }))
 }
 
 export function getCacheData(cache, fetchArgs) {

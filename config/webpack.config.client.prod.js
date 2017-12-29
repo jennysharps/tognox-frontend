@@ -1,14 +1,12 @@
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const BabelEnginePlugin = require('babel-engine-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
@@ -81,25 +79,29 @@ config.module.rules = config.module.rules.concat([
   // use the "style" loader inside the async code so CSS from them won't be
   // in the main CSS file.
   {
-    test: /\.css$/,
+    test: /\.scss$/,
     loader: ExtractTextPlugin.extract(
       Object.assign(
         {
           fallback: require.resolve('style-loader'),
-          use: [
+          loader: [
             {
               loader: require.resolve('css-loader'),
               options: {
-                importLoaders: 1,
+                camelCase: true,
+                importLoaders: 2,
                 minimize: true,
+                modules: true,
+                localIdentName: 'abc__[name]__[local]___[hash:base64:5]',
                 sourceMap: true,
               },
             },
             {
               loader: require.resolve('postcss-loader'),
               options: {
-                ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-                plugins: () => [
+                ident: 'postcss',
+                sourceMap: true,
+                plugins: [
                   require('postcss-flexbugs-fixes'),
                   autoprefixer({
                     browsers: [
@@ -109,9 +111,15 @@ config.module.rules = config.module.rules.concat([
                       'not ie < 9', // React doesn't support IE8 anyway
                     ],
                     flexbox: 'no-2009',
-                  }),
+                  })
                 ],
               },
+            },
+            {
+              loader: require.resolve('sass-loader'),
+              options: {
+                sourceMap: true
+              }
             },
           ],
         },
@@ -177,6 +185,9 @@ config.plugins = config.plugins.concat([
     },
     sourceMap: true,
   }),
+  new BabelEnginePlugin({
+    presets: ['env']
+  })
 ])
 
 // Some libraries import Node modules but don't use them in the browser.

@@ -2,70 +2,51 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
 import { fetchProject, getProject } from '../../ducks/projects/projects'
+import { getPath } from '../../utils/pathUtils'
+
 import PageNotFoundPage from '../../containers/PageNotFoundPage'
+import SEO from '../../components/SEO'
 import WYSIWYG from '../../components/WYSIWYG'
 
-const isRequiredDataAvailable = props => props.citations.length > 0
+const isRequiredDataAvailable = props => !!props.title
 
 export class Project extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      ready: isRequiredDataAvailable(props)
+      ready: false
     }
   }
 
   async componentDidMount() {
     const { store } = this.context
-    const props = this.props
-    const { ready } = this.state
-    if (!ready) {
-      await Project.fetchData(store, props)
-      this.setState({ ready: true })
-    }
+    await Project.fetchData(store, this.props)
+    this.setState({ ready: true })
   }
 
   render () {
     const {
       citations,
       content,
+      seo,
       tags,
       title
     } = this.props;
     const { ready } = this.state
 
-    if (!ready) {
-      return (
-        <div>
-          <Helmet title="Loading..." />
-          <p>Loading...</p>
-        </div>
-      )
-    }
-
-    if (!isRequiredDataAvailable(this.props)) {
+    if (ready && !isRequiredDataAvailable(this.props)) {
       return (
         <PageNotFoundPage />
       )
     }
 
     return (
-      <div className="App-intro">
-        <Helmet title={title || 'Loading...'} />
-        <p>
-          Projects page
-        </p>
-        <p>
-          <Link to="/">
-            Home
-          </Link>
-        </p>
-        <div>
-          <h2>{title}</h2>
-          <WYSIWYG content={content}/>
-        </div>
+      <div>
+        <SEO {...seo} />
+        {!ready && <p>Loading...</p>}
+        <h2>{title}</h2>
+        <WYSIWYG content={content}/>
         {citations &&
           <div>
             Citations:
@@ -81,11 +62,14 @@ export class Project extends React.Component {
           <div>
             Tags:
             {tags.map(({ id, name, slug }) => (
-              <Link to={`/tag/${slug}`} key={id}>
+              <Link
+                key={id}
+                to={getPath('tag', { slug })}
+              >
                 {name}
               </Link>
             ))}
-            <Link to={`/tag/fake`}>
+            <Link to={getPath('tag', { slug: 'fake' })}>
               Fake
             </Link>
           </div>
@@ -104,6 +88,12 @@ Project.contextTypes = {
   })
 }
 
+Project.defaultProps = {
+  seo: {
+    title: 'Loading...'
+  }
+}
+
 Project.propTypes = {
   citations: PropTypes.arrayOf(
     PropTypes.shape({
@@ -114,6 +104,10 @@ Project.propTypes = {
   content: PropTypes.string,
   match: PropTypes.shape({
     params: PropTypes.shape()
+  }),
+  seo: PropTypes.shape({
+    description: PropTypes.string,
+    title: PropTypes.string
   }),
   tags: PropTypes.arrayOf(
     PropTypes.shape({
@@ -129,12 +123,15 @@ const mapStateToProps = ({ projects }, { match: { params: { projectSlug }} }) =>
   const {
     citations,
     content,
+    seo,
     tags,
     title
   } = getProject(projects, projectSlug)
+
   return {
     citations,
     content,
+    seo,
     tags,
     title
   }

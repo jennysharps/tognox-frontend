@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 
-import { getRouteConfig } from '../../utils/routeUtils'
-
+import { getPath } from '../../utils/pathUtils'
 import logo from './logo.svg'
+
+import styles from './Header.scss'
 
 const navItems = [
   { route: 'home', text: 'Home' },
@@ -15,20 +17,23 @@ const navItems = [
 ]
 
 const Header = () => (
-  <header className="App-header">
+  <header className={classNames('App-header', styles.header)}>
     <img src={logo} className="App-logo" alt="logo" />
     <h2>Welcome to Universal React</h2>
     <nav>
       <ul>
-        {navItems.map(({ route, text }) => {
-          const { path, key } = getRouteConfig(route) || {}
+        {navItems.map(({ route, text }, index) => {
+          const path = getPath(route)
 
           if (!path) {
             console.log(`navigation route not found: ${route}`)
           }
 
           return path && (
-            <li key={key} style={{ display: 'inline-block', margin: '0 5px' }}>
+            <li
+              className={styles.navLink}
+              key={`${path}-${index}`}
+            >
               <Link to={path}>
                 {text}
               </Link>

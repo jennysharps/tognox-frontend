@@ -2,19 +2,29 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import { getPath } from '../../utils/pathUtils'
 import { fetchProjects, getProjects } from '../../ducks/projects'
+
+import SEO from '../../components/SEO'
 import WYSIWYG from '../../components/WYSIWYG'
 
 export class Projects extends React.Component {
-  componentDidMount() {
-    const store = this.context.store
-    Projects.fetchData(store)
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: false
+    }
+  }
+
+  async componentDidMount() {
+    const { store } = this.context
+    await Projects.fetchData(store)
+    this.setState({ ready: true })
   }
 
   renderProject = ({ id, title, excerpt, slug }) => (
     <div key={id}>
-      <Link to={`/projects/${slug}`}>
+      <Link to={getPath('project', { slug })}>
         <h2>{title}</h2>
       </Link>
       <WYSIWYG content={excerpt}/>
@@ -23,19 +33,14 @@ export class Projects extends React.Component {
 
   render () {
     const { projects } = this.props;
+    const { ready } = this.state
 
     return (
-      <div className="App-intro">
-        <Helmet title="Projects" />
-        <p>
-          Projects page
-        </p>
-        <p>
-          <Link to={`/`}>
-            Home
-          </Link>
-        </p>
-        {projects && projects.map(project => this.renderProject(project))}
+      <div>
+        <SEO title="Projects" />
+        {!ready && <p>Loading...</p>}
+        <h2>Projects</h2>
+        {ready && projects && projects.map(project => this.renderProject(project))}
       </div>
     )
   }

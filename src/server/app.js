@@ -24,6 +24,8 @@ const reactApp = async (req, res) => {
       status = newStatus
     }
 
+    App.fetchData && await App.fetchData(store, App.defaultProps || {})
+
     const promises = []
     routes.some(route => {
       const match = matchPath(req.path, route)

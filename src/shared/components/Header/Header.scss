@@ -1,0 +1,16 @@
+.header {
+    .nav-link {
+        display: inline-block;
+        margin: 0 5px;
+
+        a {
+            &, &:visited {
+                color: red;
+            }
+
+            &:hover {
+                color: pink;
+            }
+        }
+    }
+}

@@ -1,26 +1,40 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Helmet } from 'react-helmet'
 import { fetchPage, getPage } from '../../ducks/pages'
 
+import SEO from '../../components/SEO'
 import WYSISWG from '../../components/WYSIWYG'
 
+const isRequiredDataAvailable = ({ title }) => !!title
+
 export class About extends React.Component {
-  componentDidMount() {
-    const store = this.context.store;
-    About.fetchData(store)
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: isRequiredDataAvailable(props)
+    }
+  }
+
+  async componentDidMount() {
+    const { store } = this.context
+    const { ready } = this.state
+
+    if (!ready) {
+      await About.fetchData(store)
+      this.setState({ ready: true })
+    }
   }
 
   render () {
-    const { content, title } = this.props;
+    const { content, seo, title } = this.props
+    const { ready } = this.state
 
     return (
       <div className="App-intro">
-        <Helmet title={title} />
+        <SEO {...seo} />
+        {!ready && <p>Loading...</p>}
         <h2>{title}</h2>
-        <Link to="/projects">Projects</Link>
         <WYSISWG content={content} />
       </div>
     )
@@ -35,8 +49,18 @@ About.contextTypes = {
   })
 }
 
+About.defaultProps = {
+  seo: {
+    title: 'Loading...'
+  }
+}
+
 About.propTypes = {
   content: PropTypes.string,
+  seo: PropTypes.shape({
+    description: PropTypes.string,
+    title: PropTypes.string
+  }),
   title: PropTypes.string,
 }
 
@@ -45,10 +69,13 @@ About.slug = 'about'
 const mapStateToProps = ({ pages }) => {
   const {
     content,
+    seo,
     title
   } = getPage(pages, About.slug) || {}
+
   return {
     content,
+    seo,
     title
   }
 }

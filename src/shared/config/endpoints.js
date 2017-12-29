@@ -4,5 +4,7 @@ export const apiPaths = {
   pages: 'pages',
   citations: 'citations',
   projects: 'projects',
+  resources: 'resources',
+  settings: 'ui',
   tags: 'tags'
 }

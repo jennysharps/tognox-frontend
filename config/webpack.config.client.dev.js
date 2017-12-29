@@ -1,13 +1,11 @@
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const paths = require('./paths');
-const getClientEnvironment = require('./env');
-
 const base = require('./webpack.config.base');
 
 const config = Object.assign({}, base)
@@ -62,20 +60,30 @@ config.module.rules = config.module.rules.concat([
   // In production, we use a plugin to extract that CSS to a file, but
   // in development "style" loader enables hot editing of CSS.
   {
-    test: /\.css$/,
-    use: [
-      require.resolve('style-loader'),
+    test: /\.scss$/,
+    loader: [
+      {
+        loader: require.resolve('style-loader'),
+        options: {
+          sourceMap: true
+        },
+      },
       {
         loader: require.resolve('css-loader'),
         options: {
-          importLoaders: 1,
+          camelCase: true,
+          importLoaders: 2,
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]',
+          sourceMap: true,
         },
       },
       {
         loader: require.resolve('postcss-loader'),
         options: {
-          ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-          plugins: () => [
+          ident: 'postcss',
+          sourceMap: true,
+          plugins: [
             require('postcss-flexbugs-fixes'),
             autoprefixer({
               browsers: [
@@ -87,6 +95,12 @@ config.module.rules = config.module.rules.concat([
               flexbox: 'no-2009',
             }),
           ],
+        },
+      },
+      {
+        loader: require.resolve('sass-loader'),
+        options: {
+          sourceMap: true
         },
       },
     ],

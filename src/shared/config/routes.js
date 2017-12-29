@@ -1,55 +1,63 @@
 import About from '../containers/AboutPage'
 import ContactForm from '../components/ContactForm'
 import Home from '../containers/HomePage'
-import Project from '../containers/Project'
-import Projects from '../containers/Projects'
-import ProjectTag from '../containers/ProjectTag'
+import Project from '../containers/ProjectPage'
+import Projects from '../containers/ProjectsPage'
 import PageNotFound from '../containers/PageNotFoundPage'
-import Publications from '../containers/Publications'
+import Publications from '../containers/PublicationsPage'
+import Resource from '../containers/ResourcePage'
+import Resources from '../containers/ResourcesPage'
+import Tag from '../containers/TagPage'
+import { getPath } from '../utils/pathUtils'
 
 const routes = [
   {
-    path: '/',
+    path: getPath('home'),
     component: Home,
     exact: true,
     key: 'home'
   },
   {
-    path: `/about`,
+    path: getPath('about'),
     component: About,
     exact: true,
     key: 'about'
   },
   {
-    path: `/contact`,
+    path: getPath('contact'),
     component: ContactForm,
     exact: true,
     key: 'contact'
   },
   {
-    path: `/projects`,
+    path: getPath('projects'),
     component: Projects,
     exact: true,
     key: 'projects'
   },
   {
-    path: '/projects/:projectSlug',
+    path: getPath('project'),
     component: Project,
     key: 'project'
   },
   {
-    path: '/publications',
+    path: getPath('publications'),
     component: Publications,
     key: 'publications'
   },
   {
-    path: '/resources',
-    component: Publications,
+    path: getPath('resource'),
+    component: Resource,
+    key: 'resource'
+  },
+  {
+    path: getPath('resources'),
+    component: Resources,
     key: 'resources'
   },
   {
-    path: '/tag/:tagSlug',
-    component: ProjectTag,
+    path: getPath('tag'),
+    component: Tag,
     key: 'tag'
   },
   {

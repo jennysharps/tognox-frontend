@@ -1,12 +1,14 @@
 import { fetch, getCacheData, getEndpoint } from '../../utils/apiUtils'
 import { normalizePayloadItems } from '../../utils/payloadUtils'
 import { fetchTags, getTag } from '../tags/tags'
+import { getPath } from '../../utils/pathUtils'
 
 function normalizeProject({
   citations = [],
   content: { rendered: content } = {},
   excerpt: { rendered: excerpt } = {},
   guid: { rendered: guid } = {},
+  slug,
   title: { rendered: title } = {},
   ...restPage
 }) {
@@ -15,7 +17,9 @@ function normalizeProject({
     citations,
     content,
     excerpt,
+    link: getPath('project', { slug }),
     guid,
+    slug,
     title
   }
 }
@@ -113,8 +117,5 @@ export function getProjects({ projects }) {
 
 export function getProjectsByTag({ projects }, tagSlug) {
   return Object.values(projects)
-    .filter(({ tags }) =>
-      tags.find(({ slug }) =>
-        slug === tagSlug)
-    )
+    .filter(({ tags }) => tags.find(({ slug }) => tagSlug === slug))
 }

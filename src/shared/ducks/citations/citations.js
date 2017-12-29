@@ -63,8 +63,8 @@ const citationsApiEndpoint = getEndpoint('citations');
 export function fetchCitations() {
   return async (dispatch, getState) => {
     let args = {
-      per_page: 50,
-      hide_empty: true
+      perPage: 50,
+      hideEmpty: true
     }
     let fetchArgs = [citationsApiEndpoint, args]
     let { cacheKey, isCacheValid } = getCacheData(getState().citations.cache, fetchArgs)

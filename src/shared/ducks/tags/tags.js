@@ -1,5 +1,17 @@
 import { fetch, getCacheData, getEndpoint } from '../../utils/apiUtils'
 import { normalizePayloadItems } from '../../utils/payloadUtils'
+import { getPath } from '../../utils/pathUtils'
+
+function normalizeTag({
+  slug,
+  ...restTag
+}) {
+  return {
+    ...restTag,
+    link: getPath('tag', { slug }),
+    slug,
+  }
+}
 
 // Actions
 const LOAD   = 'tognox/tags/LOAD'
@@ -23,7 +35,7 @@ export default function reducer(state = initialState, { cacheKey, type, payload 
       },
       tags: {
         ...state.tags,
-        ...normalizePayloadItems(payload)
+        ...normalizePayloadItems(payload, normalizeTag)
       }
     }
 
@@ -47,8 +59,8 @@ const tagsApiEndpoint = getEndpoint('tags')
 export function fetchTags() {
   return async (dispatch, getState) => {
     let args = {
-      per_page: 50,
-      hide_empty: true
+      perPage: 50,
+      hideEmpty: true
     }
     let fetchArgs = [tagsApiEndpoint, args]
     let { cacheKey, isCacheValid } = getCacheData(getState().tags.cache, fetchArgs)
@@ -72,8 +84,14 @@ export function fetchTags() {
   }
 }
 
+
 // Selectors
 export function getTag({ tags }, tagSlug) {
   return Object.values(tags)
     .find(({ slug }) => slug === tagSlug)
+}
+
+export function getTags({ tags }, tagSlugs) {
+  return Object.values(tags)
+    .filter(({ slug }) => tagSlugs.contains(slug))
 }
