@@ -67,7 +67,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        loader: [
+        use: [
           {
             options: {
               formatter: eslintFormatter,

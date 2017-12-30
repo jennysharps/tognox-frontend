@@ -61,7 +61,7 @@ config.module.rules = config.module.rules.concat([
   // in development "style" loader enables hot editing of CSS.
   {
     test: /\.scss$/,
-    loader: [
+    use: [
       {
         loader: require.resolve('style-loader'),
         options: {
@@ -83,7 +83,7 @@ config.module.rules = config.module.rules.concat([
         options: {
           ident: 'postcss',
           sourceMap: true,
-          plugins: [
+          plugins: () => [
             require('postcss-flexbugs-fixes'),
             autoprefixer({
               browsers: [

@@ -65,6 +65,7 @@ config.output = {
   devtoolModuleFilenameTemplate: info =>
     path.relative(paths.appSrc, info.absoluteResourcePath),
 }
+
 config.module.rules = config.module.rules.concat([
   // The notation here is somewhat confusing.
   // "postcss" loader applies autoprefixer to our CSS.
@@ -84,7 +85,7 @@ config.module.rules = config.module.rules.concat([
       Object.assign(
         {
           fallback: require.resolve('style-loader'),
-          loader: [
+          use: [
             {
               loader: require.resolve('css-loader'),
               options: {
@@ -92,16 +93,14 @@ config.module.rules = config.module.rules.concat([
                 importLoaders: 2,
                 minimize: true,
                 modules: true,
-                localIdentName: 'abc__[name]__[local]___[hash:base64:5]',
-                sourceMap: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]',
               },
             },
             {
               loader: require.resolve('postcss-loader'),
               options: {
                 ident: 'postcss',
-                sourceMap: true,
-                plugins: [
+                plugins: () => [
                   require('postcss-flexbugs-fixes'),
                   autoprefixer({
                     browsers: [
@@ -115,12 +114,7 @@ config.module.rules = config.module.rules.concat([
                 ],
               },
             },
-            {
-              loader: require.resolve('sass-loader'),
-              options: {
-                sourceMap: true
-              }
-            },
+            require.resolve('sass-loader'),
           ],
         },
         extractTextPluginOptions
