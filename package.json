@@ -26,6 +26,7 @@
     "react-dom": "^16.1.1",
     "react-dom-server": "^0.0.5",
     "react-helmet": "^5.2.0",
+    "react-parallax": "^1.6.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",

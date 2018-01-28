@@ -40,7 +40,6 @@ if (PROD) {
           loader: require.resolve('postcss-loader'),
           options: {
             ident: 'postcss',
-            sourceMap: !PROD,
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               autoprefixer({
@@ -57,9 +56,6 @@ if (PROD) {
         },
         {
           loader: require.resolve('sass-loader'),
-          options: {
-            sourceMap: !PROD
-          },
         },
       ],
     },

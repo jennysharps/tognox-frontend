@@ -8,15 +8,13 @@ import Header from './components/Header'
 
 const App = () => (
   <div className="App">
-    <Route path="/" component={({match}) => (
-      <div>
-        <Helmet />
-        <Header />
+    <Route path="/" component={({ match }) => ([
+        <Helmet key="App-helmet" />,
+        <Header key="App-header" />,
         <Switch>
           {routes.map(route => (<Route {...route} />))}
         </Switch>
-      </div>
-    )}/>
+    ])}/>
   </div>
 )
 

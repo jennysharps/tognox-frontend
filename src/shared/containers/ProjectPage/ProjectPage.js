@@ -126,7 +126,7 @@ const mapStateToProps = ({ projects }, { match: { params: { projectSlug }} }) =>
     seo,
     tags,
     title
-  } = getProject(projects, projectSlug)
+  } = getProject(projects, projectSlug) || {}
 
   return {
     citations,

@@ -7,7 +7,7 @@ import PageNotFoundPage from '../../containers/PageNotFoundPage'
 import WYSIWYG from '../../components/WYSIWYG'
 import SEO from '../../components/SEO'
 
-const isRequiredDataAvailable = props => props.title
+const isRequiredDataAvailable = props => !!props.title
 
 export class Resource extends React.Component {
   constructor(props) {
@@ -96,7 +96,7 @@ const mapStateToProps = ({ resources }, { match: { params: { resourceSlug }} }) 
     seo,
     title,
     templateType: type
-  } = getResource(resources, resourceSlug)
+  } = getResource(resources, resourceSlug) || {}
 
   return {
     content,
