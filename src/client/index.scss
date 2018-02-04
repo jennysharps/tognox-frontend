@@ -1,12 +1,113 @@
+@font-face {
+  font-family: 'LatoLight';
+  src: url('./fonts/lato/Lato-Lig-webfont.eot');
+  src: url('./fonts/lato/Lato-Lig-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-Lig-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-Lig-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-Lig-webfont.svg#LatoLight') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoLightItalic';
+  src: url('./fonts/lato/Lato-LigIta-webfont.eot');
+  src: url('./fonts/lato/Lato-LigIta-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-LigIta-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-LigIta-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-LigIta-webfont.svg#LatoLightItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoRegular';
+  src: url('./fonts/lato/Lato-Reg-webfont.eot');
+  src: url('./fonts/lato/Lato-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-Reg-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-Reg-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-Reg-webfont.svg#LatoRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoItalic';
+  src: url('./fonts/lato/Lato-RegIta-webfont.eot');
+  src: url('./fonts/lato/Lato-RegIta-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-RegIta-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-RegIta-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-RegIta-webfont.svg#LatoItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoBold';
+  src: url('./fonts/lato/Lato-Bol-webfont.eot');
+  src: url('./fonts/lato/Lato-Bol-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-Bol-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-Bol-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-Bol-webfont.svg#LatoBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoBoldItalic';
+  src: url('./fonts/lato/Lato-BolIta-webfont.eot');
+  src: url('./fonts/lato/Lato-BolIta-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-BolIta-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-BolIta-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-BolIta-webfont.svg#LatoBoldItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoBlack';
+  src: url('./fonts/lato/Lato-Bla-webfont.eot');
+  src: url('./fonts/lato/Lato-Bla-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-Bla-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-Bla-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-Bla-webfont.svg#LatoBlack') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'LatoBlackItalic';
+  src: url('./fonts/lato/Lato-BlaIta-webfont.eot');
+  src: url('./fonts/lato/Lato-BlaIta-webfont.eot?#iefix') format('embedded-opentype'),
+  url('./fonts/lato/Lato-BlaIta-webfont.woff') format('woff'),
+  url('./fonts/lato/Lato-BlaIta-webfont.ttf') format('truetype'),
+  url('./fonts/lato/Lato-BlaIta-webfont.svg#LatoBlackItalic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :global {
   body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: "LatoRegular", Helvetica, sans-serif;
+  }
+
+  strong, b, h1, h2, h3, h4, h5, h6 {
+    font-family: "LatoBold", Helvetica, sans-serif;
+    font-weight: normal;
   }
 
   .App {
     text-align: center;
+    position: relative;
+  }
+
+  @media (min-width: 1450px) {
+    .App-bg {
+      background-size: 100% auto;
+      background-position: top center;
+    }
   }
 
   .App-logo {
@@ -15,6 +116,7 @@
   }
 
   .App-header {
+    display: none;
     background-color: #222;
     height: 150px;
     padding: 20px;

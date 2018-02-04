@@ -3,8 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getSettings } from '../../ducks/settings/settings'
 import { fetchPage, getPage } from '../../ducks/pages'
-
 import SEO from '../../components/SEO'
+
+import profileImg from './media/ID.png?sizes=250w'
+import styles from './HomePage.scss'
+
+const profileImgSrc = profileImg.sources['250w']
 
 export class Home extends React.Component {
   componentDidMount() {
@@ -28,16 +32,38 @@ export class Home extends React.Component {
   render () {
     const {
       carouselItems,
+      description,
       quotation: {
         quote,
         attribution
       } = {},
+      title,
       seo
     } = this.props;
 
     return (
       <div>
         <SEO {...seo} />
+        <div className={styles.background} />
+        <div className={styles.aboutWrapper}>
+          <div className={styles.aboutTitleWrapper}>
+            <h1 className={styles.title}>
+              {title}
+            </h1>
+            <h2 className={styles.subtitle}>
+              {description}
+            </h2>
+          </div>
+        </div>
+        <div className={styles.aboutWrapper}>
+          <h1 style={{ height: '250px' }}>Test</h1>
+          <div className={styles.headShotWrapper}>
+            <img
+              className={styles.headShot}
+              src={profileImgSrc}
+            />
+          </div>
+        </div>
         {carouselItems && carouselItems.map(carouselItem => this.renderCarouselItem(carouselItem))}
         {quote && (
           <figure>
@@ -83,10 +109,12 @@ Home.propTypes = {
       title: PropTypes.string
     }),
   ),
+  description: PropTypes.string,
   quotation: PropTypes.shape({
     quote: PropTypes.string,
     attribution: PropTypes.string
   }),
+  title: PropTypes.string,
   seo: PropTypes.shape({
     description: PropTypes.string,
     title: PropTypes.string
@@ -94,7 +122,11 @@ Home.propTypes = {
 }
 
 const mapStateToProps = ({ pages, settings }) => {
-  const { frontpage } = getSettings(settings)
+  const {
+    frontpage,
+    siteDescription,
+    siteTitle
+  } = getSettings(settings)
   const {
     carouselItems,
     quotation,
@@ -103,8 +135,10 @@ const mapStateToProps = ({ pages, settings }) => {
 
   return {
     carouselItems,
+    description: siteDescription,
     quotation,
-    seo
+    seo,
+    title: siteTitle
   }
 }
 

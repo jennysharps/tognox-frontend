@@ -9,6 +9,7 @@ const initialState = {
     frontpage: '',
     gaId: '',
     seoTitleFormat: '%s - Francesco Tonini',
+    siteDescription: 'Geospatial Data Scientist',
     siteTitle: 'Francesco Tonini'
   }
 }
