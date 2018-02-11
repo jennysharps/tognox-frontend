@@ -1,44 +1,53 @@
 export default {
   home: {
     path: '/',
-    params: {}
+    params: {},
+    slug: ''
   },
   about: {
     path: '/about',
-    params: {}
+    params: {},
+    slug: 'about'
   },
   contact: {
     path: '/contact',
-    params: {}
+    params: {},
+    slug: 'contact'
   },
   projects: {
     path: '/projects',
-    params: {}
+    params: {},
+    slug: ''
   },
   project: {
     path: '/projects/:projectSlug',
     params: {
       slug: ':projectSlug'
-    }
+    },
+    slug: ''
   },
   publications: {
     path: '/publications',
-    params: {}
+    params: {},
+    slug: 'publications'
   },
   resource: {
     path: '/resources/:resourceSlug',
     params: {
       slug: ':resourceSlug'
-    }
+    },
+    slug: ''
   },
   resources: {
     path: '/resources',
-    params: {}
+    params: {},
+    slug: ''
   },
   tag: {
     path: '/tag/:tagSlug',
     params: {
       slug: ':tagSlug'
-    }
+    },
+    slug: ''
   }
 }

@@ -3,17 +3,44 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getSettings } from '../../ducks/settings/settings'
 import { fetchPage, getPage } from '../../ducks/pages'
+import ContentSection from '../../components/ContentSection'
 import SEO from '../../components/SEO'
 
 import profileImg from './media/ID.png?sizes=250w'
 import styles from './HomePage.scss'
+import { getPathConfig } from '../../utils/pathUtils'
+import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
 
 const profileImgSrc = profileImg.sources['250w']
 
+const { slug: aboutSlug } = getPathConfig('about')
+
+const isRequiredDataAvailable = ({
+  aboutTitle,
+  carouselItems
+}) => !!(aboutTitle && carouselItems && carouselItems.length)
+
 export class Home extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      ready: isRequiredDataAvailable(props)
+    }
+  }
+
   componentDidMount() {
     const store = this.context.store;
     Home.fetchData(store)
+  }
+
+  async componentDidMount() {
+    const { ready } = this.state
+
+    if (!ready) {
+      const store = this.context.store;
+      await Home.fetchData(store)
+      this.setState({ ready: true })
+    }
   }
 
   renderCarouselItem = ({
@@ -31,6 +58,7 @@ export class Home extends React.Component {
 
   render () {
     const {
+      aboutBlurb,
       carouselItems,
       description,
       quotation: {
@@ -56,13 +84,22 @@ export class Home extends React.Component {
           </div>
         </div>
         <div className={styles.aboutWrapper}>
-          <h1 style={{ height: '250px' }}>Test</h1>
           <div className={styles.headShotWrapper}>
             <img
               className={styles.headShot}
               src={profileImgSrc}
             />
           </div>
+          <ContentSection
+            className={styles.aboutContent}
+            columns={2}
+            heading="About Me"
+          >
+            <WYSIWYG
+              className={styles.aboutBlurb}
+              content={aboutBlurb}
+            />
+          </ContentSection>
         </div>
         {carouselItems && carouselItems.map(carouselItem => this.renderCarouselItem(carouselItem))}
         {quote && (
@@ -80,7 +117,10 @@ export class Home extends React.Component {
 
 Home.fetchData = async ({ dispatch, getState }) => {
   const { frontpage } = getSettings(getState().settings)
-  await dispatch(fetchPage(frontpage))
+  await Promise.all([
+    dispatch(fetchPage(frontpage)),
+    dispatch(fetchPage(aboutSlug))
+  ])
 }
 
 Home.contextTypes = {
@@ -96,6 +136,7 @@ Home.defaultProp = {
 }
 
 Home.propTypes = {
+  aboutBlurb: PropTypes.string,
   carouselItems: PropTypes.arrayOf(
     PropTypes.shape({
       description: PropTypes.string,
@@ -132,8 +173,13 @@ const mapStateToProps = ({ pages, settings }) => {
     quotation,
     seo
   } = getPage(pages, frontpage) || {}
+  const {
+    blurb: aboutBlurb,
+    title: aboutTitle
+  } = getPage(pages, aboutSlug) || {}
 
   return {
+    aboutBlurb,
     carouselItems,
     description: siteDescription,
     quotation,

@@ -6,6 +6,9 @@ import { fetchPage, getPage } from '../../ducks/pages/pages'
 
 import SEO from '../../components/SEO'
 import WYSIWYG from '../../components/WYSIWYG'
+import { getPathConfig } from '../../utils/pathUtils'
+
+const { slug: publicationsSlug } = getPathConfig('publications');
 
 const isRequiredDataAvailable = ({ years }) => !!years.length
 
@@ -76,7 +79,7 @@ Publications.defaultProps = {
 Publications.fetchData = async ({ dispatch }) => {
   await Promise.all([
     dispatch(fetchCitations()),
-    dispatch(fetchPage(Publications.slug))
+    dispatch(fetchPage(publicationsSlug))
   ])
 }
 
@@ -85,8 +88,6 @@ Publications.contextTypes = {
     dispatch: PropTypes.func
   })
 }
-
-Publications.slug = 'publications'
 
 Publications.propTypes = {
   citations: PropTypes.arrayOf(
@@ -103,7 +104,7 @@ Publications.propTypes = {
 
 const mapStateToProps = ({ citations: citationsState, pages }) => {
   const citations = getCitations(citationsState)
-  const { seo } = getPage(pages, Publications.slug) || {}
+  const { seo } = getPage(pages, publicationsSlug) || {}
   const years = Object.values(citations)
     .reduce((accumulatedYears, { textYear }) => {
       if (!accumulatedYears.includes(textYear)) {

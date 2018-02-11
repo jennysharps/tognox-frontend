@@ -8,6 +8,26 @@
   background: url('./media/landscape_banner.png') fixed no-repeat center top;
 }
 
+@media (min-width: 1400px) {
+  .background {
+    background-size: 100% auto;
+  }
+}
+
+.about-blurb {
+  & > *:first-child {
+    -webkit-margin-before: 0;
+  }
+
+  & > *:last-child {
+    -webkit-margin-after: 0;
+  }
+}
+
+.about-content {
+  margin-top: 125px;
+}
+
 .about-wrapper {
   position: relative;
   display: flex;
@@ -35,6 +55,7 @@
 }
 
 .head-shot-wrapper {
+  left: 0;
   position: absolute;
   top: -125px;
   width: 100%;

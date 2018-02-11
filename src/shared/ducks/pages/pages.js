@@ -4,6 +4,7 @@ import { getPath } from '../../utils/pathUtils'
 
 function normalizePage({
   content: { rendered: content } = {},
+  blurb: { rendered: blurb } = {},
   excerpt: { rendered: excerpt } = {},
   guid: { rendered: guid } = {},
   slug,
@@ -13,6 +14,7 @@ function normalizePage({
   return {
     ...restPage,
     content,
+    blurb,
     excerpt,
     guid,
     link: getPath(slug),

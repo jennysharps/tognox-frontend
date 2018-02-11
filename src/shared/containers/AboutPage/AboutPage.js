@@ -5,6 +5,9 @@ import { fetchPage, getPage } from '../../ducks/pages'
 
 import SEO from '../../components/SEO'
 import WYSISWG from '../../components/WYSIWYG'
+import { getPathConfig } from '../../utils/pathUtils'
+
+const { slug: aboutSlug } = getPathConfig('about');
 
 const isRequiredDataAvailable = ({ title }) => !!title
 
@@ -41,7 +44,7 @@ export class About extends React.Component {
   }
 }
 
-About.fetchData = ({ dispatch }) => dispatch(fetchPage(About.slug))
+About.fetchData = ({ dispatch }) => dispatch(fetchPage(aboutSlug))
 
 About.contextTypes = {
   store: PropTypes.shape({
@@ -64,14 +67,12 @@ About.propTypes = {
   title: PropTypes.string,
 }
 
-About.slug = 'about'
-
 const mapStateToProps = ({ pages }) => {
   const {
     content,
     seo,
     title
-  } = getPage(pages, About.slug) || {}
+  } = getPage(pages, aboutSlug) || {}
 
   return {
     content,
