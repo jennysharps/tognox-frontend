@@ -6,6 +6,14 @@
   height: 575px;
   display: block;
   background: url('./media/landscape_banner.png') fixed no-repeat center top;
+
+  &:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(22, 61, 80, 0.6);
+  }
 }
 
 @media (min-width: 1400px) {
@@ -33,6 +41,7 @@
   display: flex;
   justify-content: space-evenly;
   height: 600px;
+  flex-grow: 1;
 }
 
 .about-title-wrapper {
@@ -40,18 +49,21 @@
 }
 
 .title {
+  color: #ffffff;
   font-size: 88px;
   letter-spacing: 1px;
   margin: 0;
+  text-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
-  color: rgba(0, 0, 0, 0.6);
-  font-family: 'LatoRegular', Helvetivca, sans-serif;
+  color: rgba(250, 250, 250, 0.6);
+  font-family: 'LatoLight', Helvetivca, sans-serif;
   font-size: 25px;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   word-spacing: 4px;
+  text-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
 }
 
 .head-shot-wrapper {

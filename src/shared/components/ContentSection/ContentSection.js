@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import SectionHeading from '../SectionHeading'
 import styles from './ContentSection.scss'
 
 const ContentSection = ({
@@ -14,11 +15,11 @@ const ContentSection = ({
     className={classNames(styles.container, className)}
     {...rest}
   >
-    {heading && <h1>{heading}</h1>}
+    {heading && <SectionHeading>{heading}</SectionHeading>}
     {children && (
       <div
         className={styles.multiColumn}
-        style={columnCount > 1 ? {columnCount} : undefined}
+        style={columnCount > 1 ? { columnCount } : undefined}
       >
         {children}
       </div>

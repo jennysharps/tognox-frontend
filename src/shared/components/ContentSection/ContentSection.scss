@@ -1,8 +1,8 @@
 .container {
   text-align: left;
-  padding: 0 2em;
 }
 
 .multi-column {
+  column-gap: 3em;
   column-fill: balance;
 }

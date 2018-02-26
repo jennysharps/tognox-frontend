@@ -1,0 +1,17 @@
+.heading {
+  font-size: 2.235em;
+  letter-spacing: 0.05em;
+  word-spacing: 0.155em;
+  text-align: left;
+  text-transform: uppercase;
+  margin: 1.25em 0;
+
+  &:after {
+    background-color: #317253;
+    content: '';
+    display: block;
+    height: 7px;
+    margin: 0.3em 0;
+    width: 52px;
+  }
+}

@@ -96,9 +96,12 @@
 
 :global {
   body {
+    color: #333D47;
+    line-height: 1.5;
     margin: 0;
     padding: 0;
-    font-family: "LatoRegular", Helvetica, sans-serif;
+    font-family: "LatoLight", Helvetica, sans-serif;
+    font-size: 17px;
   }
 
   strong, b, h1, h2, h3, h4, h5, h6 {

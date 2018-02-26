@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getSettings } from '../../ducks/settings/settings'
 import { fetchPage, getPage } from '../../ducks/pages'
+import Carousel from '../../components/Carousel'
 import ContentSection from '../../components/ContentSection'
 import SEO from '../../components/SEO'
 
-import profileImg from './media/ID.png?sizes=250w'
+import profileImg from './media/francesco_avatar.jpg?sizes=250w'
 import styles from './HomePage.scss'
 import { getPathConfig } from '../../utils/pathUtils'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
@@ -90,16 +91,40 @@ export class Home extends React.Component {
               src={profileImgSrc}
             />
           </div>
-          <ContentSection
+          <div
             className={styles.aboutContent}
-            columns={2}
-            heading="About Me"
+            style={{ maxWidth: '850px' }}
           >
-            <WYSIWYG
-              className={styles.aboutBlurb}
-              content={aboutBlurb}
-            />
-          </ContentSection>
+            <Carousel className={styles.aboutCarousel}>
+              <ContentSection
+                columns={2}
+                heading="About Me"
+              >
+                <WYSIWYG
+                  className={styles.aboutBlurb}
+                  content={aboutBlurb}
+                />
+              </ContentSection>
+              <ContentSection
+                columns={2}
+                heading="About 2"
+              >
+                <WYSIWYG
+                  className={styles.aboutBlurb}
+                  content={aboutBlurb}
+                />
+              </ContentSection>
+              <ContentSection
+                columns={2}
+                heading="About 3"
+              >
+                <WYSIWYG
+                  className={styles.aboutBlurb}
+                  content={aboutBlurb}
+                />
+              </ContentSection>
+            </Carousel>
+          </div>
         </div>
         {carouselItems && carouselItems.map(carouselItem => this.renderCarouselItem(carouselItem))}
         {quote && (
