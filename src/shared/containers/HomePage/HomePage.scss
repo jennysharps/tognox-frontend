@@ -1,4 +1,4 @@
-.background {
+.title-background {
   position: absolute;
   top: 0;
   left: 0;
@@ -17,7 +17,7 @@
 }
 
 @media (min-width: 1400px) {
-  .background {
+  .title-background {
     background-size: 100% auto;
   }
 }
@@ -32,20 +32,99 @@
   }
 }
 
-.about-content {
-  margin-top: 125px;
+.content {
+  max-width: 100%;
+  width: 980px;
+  margin: 4rem 0;
 }
 
-.about-wrapper {
+.about-content {
+  composes: content;
+  margin-top: 125px;
+  max-width: 100%;
+}
+
+.content-wrapper {
   position: relative;
   display: flex;
   justify-content: space-evenly;
-  height: 600px;
   flex-grow: 1;
+  padding: 0 1.5rem;
+
+  &.alternate {
+    background-color: #EDEFF5;
+  }
+
+  > * {
+    max-width: 100%;
+  }
 }
 
-.about-title-wrapper {
+.title-content-wrapper {
+  composes: content-wrapper;
+  height: 575px;
+}
+
+.fixed-height-content-wrapper {
+  composes: content-wrapper;
+  height: 600px;
+}
+
+.title-wrapper {
   align-self: center;
+}
+
+.about-education {
+  margin: 0 -1.75em;
+
+  .item {
+    margin: 0 1.75em;
+  }
+
+  .name,
+  .years {
+    font-size: 1.25em;
+    line-height: 1.25;
+    margin: 0.25em 0;
+  }
+
+  .years {
+    color: #94A3BA;
+  }
+}
+
+.about-hobbies {
+  margin: 0 -1.2em;
+
+  .item {
+    margin: 0 1.2em;
+    text-align: center;
+
+    &:hover .icon-wrapper {
+      opacity: 1;
+    }
+
+    .icon-wrapper {
+      background: #94A3BA;
+      border-radius: 50%;
+      opacity: 0.7;
+      padding: 2em;
+
+      .icon {
+        max-width: 100%;
+      }
+    }
+
+    .name {
+      font-family: LatoLight, sans-serif;
+      font-size: 1.15em;
+    }
+  }
+}
+
+.fit-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 }
 
 .title {

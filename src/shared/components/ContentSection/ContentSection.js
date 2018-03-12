@@ -18,8 +18,11 @@ const ContentSection = ({
     {heading && <SectionHeading>{heading}</SectionHeading>}
     {children && (
       <div
-        className={styles.multiColumn}
-        style={columnCount > 1 ? { columnCount } : undefined}
+        className={classNames(
+          styles.multiColumn,
+          'content-wrapper',
+          { [styles[`column${columnCount}`]]: columnCount > 1 }
+        )}
       >
         {children}
       </div>

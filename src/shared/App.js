@@ -11,9 +11,11 @@ const App = () => (
     <Route path="/" component={({ match }) => ([
         <Helmet key="App-helmet" />,
         <Header key="App-header" />,
-        <Switch>
-          {routes.map(route => (<Route {...route} />))}
-        </Switch>
+        <main className="App-content">
+          <Switch>
+            {routes.map(route => (<Route {...route} />))}
+          </Switch>
+        </main>
     ])}/>
   </div>
 )
