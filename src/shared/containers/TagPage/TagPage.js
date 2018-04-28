@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -59,11 +59,15 @@ export class Tag extends React.Component {
       <div>
         <SEO title={ready ? `Tag: ${name}` : 'Loading...'} />
         {!ready && <p>Loading...</p>}
-        <h2>Items tagged <strong>{name}</strong></h2>
-        {items.length
-          ? items.map(item => this.renderItem(item))
-          : <div>No projects found</div>
-        }
+        {ready && (
+          <Fragment>
+            <h2>Items tagged "{name}"</h2>
+            {items.length
+              ? items.map(item => this.renderItem(item))
+              : <div>No projects found</div>
+            }
+          </Fragment>
+        )}
       </div>
     )
   }

@@ -6,14 +6,18 @@ import { connect } from 'react-redux'
 import { getSettings } from '../../ducks/settings/settings'
 import { fetchPage, getPage } from '../../ducks/pages'
 import Carousel from '../../components/Carousel'
+import ProjectGrid from '../../components/ProjectGrid'
+import GridItem from '../../components/GridItem'
 import ContentSection from '../../components/ContentSection'
 import SEO from '../../components/SEO'
 
 import profileImg from './media/francesco_avatar.jpg?sizes=250w'
 import placeholder from './media/placeholder.jpg'
-import styles from './HomePage.scss'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
+import ContentGrid from '../../components/ContentGrid'
 import { getPath } from '../../utils/pathUtils'
+
+import styles from './HomePage.scss'
 
 const profileImgSrc = profileImg.sources['250w']
 
@@ -86,36 +90,18 @@ export class Home extends React.Component {
     </div>
   )
 
-  renderProjectItem = ({
-    id,
-    imageMeta: { url: imgUrl, width, height, alt },
-    link,
-    title
-  }) => (
-    <Link
-      className={styles.item}
-      to={link}
+  renderProjectItem = ({ id, imageMeta, link, title }) => (
+    <GridItem
       key={id}
+      backgroundImg={imageMeta}
+      link={link}
     >
-      <div className={styles.image}>
-        <img
-          alt={alt}
-          src={imgUrl || placeholder}
-          width={width || 100}
-          height={height || 100}
-        />
-      </div>
-      <div className={styles.text}>
-        <h2>{title}</h2>
-      </div>
-    </Link>
+      <h2>{title}</h2>
+    </GridItem>
   )
 
   renderSkillItem = ({ name, proficiency }, i) => (
-    <div
-      className={styles.item}
-      key={`${name}-${i}`}
-    >
+    <div key={`${name}-${i}`}>
       <h2>{name}</h2>
       <h3>{proficiency}</h3>
     </div>
@@ -124,7 +110,6 @@ export class Home extends React.Component {
   render () {
     const {
       aboutBlurb,
-      carouselItems,
       description,
       education,
       hobbies,
@@ -197,9 +182,19 @@ export class Home extends React.Component {
               className={styles.content}
               heading="Projects"
             >
-              <div className={styles.projects}>
+              <ProjectGrid content={projects} />
+            </ContentSection>
+          </div>
+        </div>
+        <div className={styles.contentWrapper}>
+          <div>
+            <ContentSection
+              className={classnames(styles.content, styles.projects)}
+              heading="Projects"
+            >
+              <ContentGrid>
                 {projects && projects.map(this.renderProjectItem)}
-              </div>
+              </ContentGrid>
             </ContentSection>
           </div>
         </div>
@@ -209,13 +204,12 @@ export class Home extends React.Component {
               className={styles.content}
               heading="Skills"
             >
-              <div className={styles.skills}>
+              <ContentGrid>
                 {skills && skills.map(this.renderSkillItem)}
-              </div>
+              </ContentGrid>
             </ContentSection>
           </div>
         </div>
-        {carouselItems && carouselItems.map(this.renderCarouselItem)}
         {quote && (
           <figure>
             <blockquote>
@@ -300,7 +294,7 @@ Home.propTypes = {
   skills: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      profociency: PropTypes.string
+      proficiency: PropTypes.string
     })
   ),
 }
@@ -317,7 +311,7 @@ const mapStateToProps = ({ pages, settings }) => {
     relatedContent: {
       about = {},
       projects = []
-    },
+    } = {},
     seo
   } = getPage(pages, frontpage) || {}
   const {

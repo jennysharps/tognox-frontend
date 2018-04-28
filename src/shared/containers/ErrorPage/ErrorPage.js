@@ -1,22 +1,25 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { connect, withRouter } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-export const ErrorPage = ({ status: { code } }) => {
-  return (
-    <div>
-      <Helmet title={code === 404 ? 'Not found' : 'Error'} />
-      {code === 404
-        ? (<div>Not Found</div>)
-        : (<div>Error</div>)
-      }
-      <Link to="/">
-        Go home
-      </Link>
-    </div>
-  )
-}
+export const ErrorPage = ({ status: { code } }) => (
+  <div>
+    <Helmet title="Error" />
+    <h1>
+      Error: {code}
+    </h1>
+    <a href="/">
+      Go home
+    </a>
+    <a href="/a">
+      Go somewhere that doesn't exist
+    </a>
+    <a href="/tag/abcde">
+      Go somewhere that doesn't exist but matches a route
+    </a>
+  </div>
+)
 
 const mapStateToProps = ({ status }) => ({ status })
 

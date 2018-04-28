@@ -1,5 +1,5 @@
 {
-  "name": "universal-create-react-app",
+  "name": "@jls/tognox-frontend",
   "version": "0.1.0",
   "scripts": {
     "serve": "NODE_ENV=production node ./build/server/bundle.js",
@@ -28,7 +28,7 @@
     "react-helmet": "^5.2.0",
     "react-parallax": "^1.6.0",
     "react-redux": "^5.0.6",
-    "react-router-dom": "^4.1.1",
+    "react-router-dom": "^4.2.2",
     "react-slick": "^0.20.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",

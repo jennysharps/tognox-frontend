@@ -11,17 +11,12 @@ import routes from '../shared/config/routes'
 import render from './render'
 import { loadStatus } from '../shared/ducks/status/status'
 import App from '../shared/App'
-import ErrorPage from '../shared/containers/ErrorPage'
 
 const reactApp = async (req, res) => {
   try {
     const store = createStore(rootReducer, applyMiddleware(thunk))
     const context = {}
     let HTML
-
-    const setStatus = (newStatus) => {
-      store.dispatch(loadStatus({ code: newStatus }))
-    }
 
     try {
       App.fetchData && await App.fetchData(store, App.defaultProps || {})
@@ -42,11 +37,11 @@ const reactApp = async (req, res) => {
 
       await Promise.all(promises)
     } catch (error) {
-      setStatus(500)
+      store.dispatch(loadStatus({ code: 500 }))
     }
 
     HTML = renderToString(
-      <Context setStatus={setStatus} store={store}>
+      <Context store={store}>
         <Router context={{}} location={req.url}>
           <App />
         </Router>
@@ -58,6 +53,7 @@ const reactApp = async (req, res) => {
     if (context.url) {
       res.redirect(301, context.url)
     } else {
+      console.log('Server status code:', code)
       res.status(code).send(render(HTML, store.getState(), Helmet.renderStatic()))
     }
   } catch (error) {

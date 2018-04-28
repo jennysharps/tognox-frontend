@@ -9,7 +9,7 @@ import App from '../shared/App';
 import { rootReducer } from '../shared/ducks'
 import registerServiceWorker from './registerServiceWorker'
 
-import './index.scss'
+import '../shared/styles/index.scss'
 
 const preloadedState = window.__PRELOADED_STATE__
 delete window.__PRELOADED_STATE__
@@ -22,7 +22,7 @@ const store = createStore(
 
 ReactDOM.hydrate(
   <Context store={store}>
-    <Router context={{}}>
+    <Router>
       <App />
     </Router>
   </Context>,

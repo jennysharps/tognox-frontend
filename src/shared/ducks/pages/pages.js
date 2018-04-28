@@ -7,6 +7,7 @@ function normalizePage({
   blurb: { rendered: blurb } = {},
   excerpt: { rendered: excerpt } = {},
   guid: { rendered: guid } = {},
+  relatedContent = {},
   slug,
   title: { rendered: title } = {},
   ...restPage
@@ -18,6 +19,7 @@ function normalizePage({
     excerpt,
     guid,
     link: getPath(slug),
+    relatedContent,
     slug,
     title
   }

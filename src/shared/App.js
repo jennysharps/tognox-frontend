@@ -1,30 +1,36 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Helmet as ReactHelmet } from 'react-helmet'
 import routes from './config/routes'
 import { fetchSettings, getSettings } from './ducks/settings/settings'
 import Header from './components/Header'
 import ErrorPage from './containers/ErrorPage'
+import { loadStatus } from './ducks/status/status'
 
-const App = connect(({ status }) => ({ status }))(({ status: { code } }) => (
-  <div className="App">
-    <Route path="/" component={({ match }) => ([
-        <Helmet key="App-helmet" />,
-        <Header key="App-header" />,
+const App = withRouter(connect(
+  ({ status }) => ({ status }),
+  { setStatus: loadStatus }
+)(({ status: { code } }) => {
+  return (
+    <div className="App">
+      <Route path="/" onEnter={() => loadStatus({ code: 200 })} component={({match}) => ([
+        <Helmet key="App-helmet"/>,
+        <Header key="App-header"/>,
         <main key="content" className="App-content">
-          {code > 200
-            ? (<ErrorPage />)
-            : (
+          {code < 500
+            ? (
               <Switch>
                 {routes.map(route => (<Route {...route} />))}
               </Switch>
             )
+            : (<ErrorPage />)
           }
         </main>
-    ])}/>
-  </div>
-))
+      ])}/>
+    </div>
+  )
+}))
 
 const Helmet = connect(({ settings, status }) => {
   const {
