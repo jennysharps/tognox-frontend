@@ -52,7 +52,7 @@
   padding: 0 1.5rem;
 
   &.alternate {
-    background-color: #EDEFF5;
+    background-color: #EFF1F4;
   }
 
   > * {
@@ -122,14 +122,96 @@
   }
 }
 
+.projects, .skills {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(50px, 1fr));
+
+  .item {
+    position: relative;
+    text-align: center;
+  }
+}
+
+.projects .item {
+  .image {
+    position: relative;
+
+    img {
+      height: auto;
+      width: 100%;
+      display: block;
+      opacity: 0.75;
+      z-index: 1;
+      filter: grayscale(75%);
+    }
+
+    &:after {
+      position: absolute;
+      top: 0;
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(30, 85, 112, 0.7);
+      box-shadow: inset 0 0 12rem rgba(30, 85, 112, 0.8);
+    }
+  }
+
+  &:nth-child(odd) .image:after {
+    background-color: rgba(22, 61, 80, 0.8);
+    box-shadow: inset 0 0 12rem rgba(22, 61, 80, 0.8);
+  }
+
+  .text {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding: 0 1.5rem;
+    z-index: 4;
+
+    h2 {
+      position: relative;
+      align-self: center;
+      color: #FFF;
+      font-size: 24px;
+      letter-spacing: 0.05em;
+      word-spacing: 4px;
+      text-shadow: 1px 1px 7px rgba(51, 61, 71, 0.5);
+    }
+  }
+
+  &:hover {
+    .image:after {
+      box-shadow: inset 3px 3px 2rem rgba(22, 61, 80, 0.8);
+    }
+
+    .image img {
+      filter: none;
+    }
+
+    .text h2 {
+      text-shadow: 1px 3px 2px rgba(51, 61, 71, 0.8);
+    }
+  }
+
+  &:nth-child(odd):hover {
+    .image:after {
+      box-shadow: inset 3px 3px 2rem rgba(51, 61, 71, 0.8);
+    }
+  }
+}
+
 .fit-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
 }
 
 .title {
-  color: #ffffff;
   font-size: 88px;
+  color: #ffffff;
   letter-spacing: 1px;
   margin: 0;
   text-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
@@ -137,7 +219,7 @@
 
 .subtitle {
   color: rgba(250, 250, 250, 0.6);
-  font-family: 'LatoLight', Helvetivca, sans-serif;
+  font-family: 'LatoLight', Helvetica, sans-serif;
   font-size: 25px;
   letter-spacing: 0.25em;
   text-transform: uppercase;

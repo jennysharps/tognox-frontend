@@ -10,6 +10,7 @@ import ContentSection from '../../components/ContentSection'
 import SEO from '../../components/SEO'
 
 import profileImg from './media/francesco_avatar.jpg?sizes=250w'
+import placeholder from './media/placeholder.jpg'
 import styles from './HomePage.scss'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
 import { getPath } from '../../utils/pathUtils'
@@ -87,7 +88,7 @@ export class Home extends React.Component {
 
   renderProjectItem = ({
     id,
-    imageMeta: { url: imgUrl, ...restImg },
+    imageMeta: { url: imgUrl, width, height, alt },
     link,
     title
   }) => (
@@ -96,12 +97,28 @@ export class Home extends React.Component {
       to={link}
       key={id}
     >
-      <img
-        src={imgUrl}
-        {...restImg}
-      />
-      <h2>{title}</h2>
+      <div className={styles.image}>
+        <img
+          alt={alt}
+          src={imgUrl || placeholder}
+          width={width || 100}
+          height={height || 100}
+        />
+      </div>
+      <div className={styles.text}>
+        <h2>{title}</h2>
+      </div>
     </Link>
+  )
+
+  renderSkillItem = ({ name, proficiency }, i) => (
+    <div
+      className={styles.item}
+      key={`${name}-${i}`}
+    >
+      <h2>{name}</h2>
+      <h3>{proficiency}</h3>
+    </div>
   )
 
   render () {
@@ -117,7 +134,8 @@ export class Home extends React.Component {
         attribution
       } = {},
       title,
-      seo
+      seo,
+      skills
     } = this.props;
 
     return (
@@ -179,7 +197,9 @@ export class Home extends React.Component {
               className={styles.content}
               heading="Projects"
             >
-              {projects && projects.map(this.renderProjectItem)}
+              <div className={styles.projects}>
+                {projects && projects.map(this.renderProjectItem)}
+              </div>
             </ContentSection>
           </div>
         </div>
@@ -189,7 +209,9 @@ export class Home extends React.Component {
               className={styles.content}
               heading="Skills"
             >
-              <p>Stuff</p>
+              <div className={styles.skills}>
+                {skills && skills.map(this.renderSkillItem)}
+              </div>
             </ContentSection>
           </div>
         </div>
@@ -274,7 +296,13 @@ Home.propTypes = {
   seo: PropTypes.shape({
     description: PropTypes.string,
     title: PropTypes.string
-  })
+  }),
+  skills: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      profociency: PropTypes.string
+    })
+  ),
 }
 
 const mapStateToProps = ({ pages, settings }) => {
@@ -295,7 +323,8 @@ const mapStateToProps = ({ pages, settings }) => {
   const {
     blurb: aboutBlurb,
     education,
-    hobbies
+    hobbies,
+    skills
   } = about
 
   return {
@@ -312,6 +341,7 @@ const mapStateToProps = ({ pages, settings }) => {
     }) => ({ id, imageMeta, link: getPath('project', { slug }), title })),
     quotation,
     seo,
+    skills,
     title: siteTitle
   }
 }

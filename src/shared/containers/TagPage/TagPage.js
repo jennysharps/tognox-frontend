@@ -24,8 +24,16 @@ export class Tag extends React.Component {
   async componentDidMount() {
     const { store } = this.context
     const props = this.props
-    await Tag.fetchData(store, props)
-    this.setState({ ready: true })
+    performance.mark('client side tags fetch start');
+    await Tag.fetchData(store, props);
+    this.setState({ ready: true }, () => {
+      performance.mark('client side tags ready');
+    });
+    performance.measure(
+      'Client side tags start data loading',
+      'client side tags fetch start',
+      'client side tags ready'
+    );
   }
 
   renderItem = ({ id, title, excerpt, link }) => (
