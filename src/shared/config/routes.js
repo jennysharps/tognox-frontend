@@ -3,7 +3,7 @@ import ContactForm from '../components/ContactForm'
 import Home from '../containers/HomePage'
 import Project from '../containers/ProjectPage'
 import Projects from '../containers/ProjectsPage'
-import PageNotFound from '../containers/PageNotFoundPage'
+import ErrorPage from '../containers/ErrorPage'
 import Publications from '../containers/PublicationsPage'
 import Resource from '../containers/ResourcePage'
 import Resources from '../containers/ResourcesPage'
@@ -62,8 +62,8 @@ const routes = [
   },
   {
     path: '*',
-    component: PageNotFound,
-    key: '404'
+    component: ErrorPage,
+    key: 'error'
   }
 ]
 

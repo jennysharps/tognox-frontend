@@ -5,6 +5,7 @@ import pages from './pages'
 import projects from './projects'
 import resources from './resources'
 import settings from './settings'
+import status from './status'
 import tags from './tags'
 
 export const rootReducer = combineReducers({
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers({
   projects,
   resources,
   settings,
+  status,
   tags
 })

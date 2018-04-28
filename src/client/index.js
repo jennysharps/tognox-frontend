@@ -22,7 +22,7 @@ const store = createStore(
 
 ReactDOM.hydrate(
   <Context store={store}>
-    <Router>
+    <Router context={{}}>
       <App />
     </Router>
   </Context>,

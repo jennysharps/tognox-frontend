@@ -5,22 +5,28 @@ import { Helmet as ReactHelmet } from 'react-helmet'
 import routes from './config/routes'
 import { fetchSettings, getSettings } from './ducks/settings/settings'
 import Header from './components/Header'
+import ErrorPage from './containers/ErrorPage'
 
-const App = () => (
+const App = connect(({ status }) => ({ status }))(({ status: { code } }) => (
   <div className="App">
     <Route path="/" component={({ match }) => ([
         <Helmet key="App-helmet" />,
         <Header key="App-header" />,
-        <main className="App-content">
-          <Switch>
-            {routes.map(route => (<Route {...route} />))}
-          </Switch>
+        <main key="content" className="App-content">
+          {code > 200
+            ? (<ErrorPage />)
+            : (
+              <Switch>
+                {routes.map(route => (<Route {...route} />))}
+              </Switch>
+            )
+          }
         </main>
     ])}/>
   </div>
-)
+))
 
-const Helmet = connect(({ settings }) => {
+const Helmet = connect(({ settings, status }) => {
   const {
     seoTitleFormat,
     siteTitle
@@ -28,7 +34,8 @@ const Helmet = connect(({ settings }) => {
 
   return {
     seoTitleFormat,
-    siteTitle
+    siteTitle,
+    status
   }
 })(({ seoTitleFormat, siteTitle }) => (
   <ReactHelmet

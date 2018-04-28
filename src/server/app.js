@@ -9,56 +9,56 @@ import thunk from 'redux-thunk'
 import { rootReducer } from '../shared/ducks'
 import routes from '../shared/config/routes'
 import render from './render'
+import { loadStatus } from '../shared/ducks/status/status'
 import App from '../shared/App'
-
-const ErrorPage = () => <h1>Oops there was an error</h1>
+import ErrorPage from '../shared/containers/ErrorPage'
 
 const reactApp = async (req, res) => {
   try {
     const store = createStore(rootReducer, applyMiddleware(thunk))
     const context = {}
     let HTML
-    let status = 200
 
     const setStatus = (newStatus) => {
-      status = newStatus
+      store.dispatch(loadStatus({ code: newStatus }))
     }
-
-    App.fetchData && await App.fetchData(store, App.defaultProps || {})
-
-    const promises = []
-    routes.some(route => {
-      const match = matchPath(req.path, route)
-      if (match && route.component.fetchData)
-        promises.push(route.component.fetchData(
-          store,
-          {
-            ...route.component.defaultProps || {},
-            match
-          }
-        ))
-      return match
-    })
-
-    await Promise.all(promises)
 
     try {
-      HTML = renderToString(
-        <Context setStatus={setStatus} store={store}>
-          <Router context={{}} location={req.url}>
-            <App />
-          </Router>
-        </Context>
-      )
+      App.fetchData && await App.fetchData(store, App.defaultProps || {})
+
+      const promises = []
+      routes.some(route => {
+        const match = matchPath(req.path, route)
+        if (match && route.component.fetchData)
+          promises.push(route.component.fetchData(
+            store,
+            {
+              ...route.component.defaultProps || {},
+              match
+            }
+          ))
+        return match
+      })
+
+      await Promise.all(promises)
     } catch (error) {
-      HTML = renderToString(ErrorPage)
-      status = 500
+      setStatus(500)
     }
+
+    HTML = renderToString(
+      <Context setStatus={setStatus} store={store}>
+        <Router context={{}} location={req.url}>
+          <App />
+        </Router>
+      </Context>
+    )
+
+    const { status: { code } } = store.getState()
 
     if (context.url) {
       res.redirect(301, context.url)
     } else {
-      res.status(status).send(render(HTML, store.getState(), Helmet.renderStatic()))
+      res.status(code).send(render(HTML, store.getState(), Helmet.renderStatic()))
     }
   } catch (error) {
     console.log(error)
