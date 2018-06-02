@@ -43,9 +43,9 @@ export class Project extends React.Component {
 
     return (
       <div>
-        <SEO {...seo} />
+        <SEO {...seo} loading={!isRequiredDataAvailable(this.props)} />
         {!ready && <p>Loading...</p>}
-        <h2>{title}</h2>
+        <WYSIWYG content={title} element="h2" />
         <WYSIWYG content={content}/>
         {citations &&
           <div>
@@ -86,12 +86,6 @@ Project.contextTypes = {
   store: PropTypes.shape({
     dispatch: PropTypes.func
   })
-}
-
-Project.defaultProps = {
-  seo: {
-    title: 'Loading...'
-  }
 }
 
 Project.propTypes = {

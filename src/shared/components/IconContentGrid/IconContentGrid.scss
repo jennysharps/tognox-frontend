@@ -1,0 +1,42 @@
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(50px, 1fr));
+  margin: 0 -1.2em;
+}
+
+.item {
+  margin: 0 1.2em;
+  text-align: center;
+}
+
+.icon-wrapper {
+  background: #94A3BA;
+  border-radius: 50%;
+  opacity: 0.7;
+  padding: 1em;
+  transition: opacity .25s ease-in-out;
+}
+
+.item:hover .icon-wrapper {
+  opacity: 1;
+}
+
+.icon {
+  max-width: 100%;
+  display: block;
+}
+
+.name {
+  font-family: LatoLight, sans-serif;
+  font-size: 1.15em;
+}
+
+@media (min-width: 768px) {
+  .content {
+    grid-template-columns: repeat(6, minmax(50px, 1fr));
+  }
+
+  .icon-wrapper {
+    padding: 2em;
+  }
+}

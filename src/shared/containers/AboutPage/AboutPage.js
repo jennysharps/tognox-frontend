@@ -5,6 +5,8 @@ import { fetchPage, getPage } from '../../ducks/pages'
 
 import SEO from '../../components/SEO'
 import WYSISWG from '../../components/WYSIWYG'
+import ContentWrapper from '../../components/ContentWrapper'
+import IconGridContent from '../../components/IconGridContent'
 import { getPathConfig } from '../../utils/pathUtils'
 
 const { slug: aboutSlug } = getPathConfig('about');
@@ -30,15 +32,21 @@ export class About extends React.Component {
   }
 
   render () {
-    const { content, seo, title } = this.props
+    const { content, hobbies, seo, title } = this.props
     const { ready } = this.state
 
     return (
       <div className="App-intro">
-        <SEO {...seo} />
+        <SEO {...seo} loading={!ready} />
         {!ready && <p>Loading...</p>}
         <h2>{title}</h2>
         <WYSISWG content={content} />
+        <ContentWrapper>
+          <IconGridContent
+            heading="Hobbies & Interests"
+            content={hobbies}
+          />
+        </ContentWrapper>
       </div>
     )
   }
@@ -52,14 +60,14 @@ About.contextTypes = {
   })
 }
 
-About.defaultProps = {
-  seo: {
-    title: 'Loading...'
-  }
-}
-
 About.propTypes = {
   content: PropTypes.string,
+  hobbies: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      icon: PropTypes.string
+    })
+  ),
   seo: PropTypes.shape({
     description: PropTypes.string,
     title: PropTypes.string
@@ -70,12 +78,14 @@ About.propTypes = {
 const mapStateToProps = ({ pages }) => {
   const {
     content,
+    hobbies,
     seo,
-    title
+    title,
   } = getPage(pages, aboutSlug) || {}
 
   return {
     content,
+    hobbies,
     seo,
     title
   }

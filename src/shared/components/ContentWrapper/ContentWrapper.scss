@@ -1,0 +1,15 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding: 0 1.5rem;
+
+  &.alternate {
+    background-color: #EFF1F4;
+  }
+
+  > * {
+    max-width: 100%;
+  }
+}

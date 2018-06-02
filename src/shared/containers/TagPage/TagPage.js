@@ -39,7 +39,7 @@ export class Tag extends React.Component {
   renderItem = ({ id, title, excerpt, link }) => (
     <div key={id}>
       <Link to={link}>
-        <h2>{title}</h2>
+        <WYSIWYG content={title} element="h2" />
       </Link>
       <WYSIWYG content={excerpt}/>
     </div>
@@ -57,7 +57,7 @@ export class Tag extends React.Component {
 
     return (
       <div>
-        <SEO title={ready ? `Tag: ${name}` : 'Loading...'} />
+        <SEO title={`Tag: ${name}`} loading={!ready}  />
         {!ready && <p>Loading...</p>}
         {ready && (
           <Fragment>

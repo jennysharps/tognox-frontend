@@ -1,17 +1,31 @@
 .heading {
+  display: inline-block;
   font-size: 2.235em;
   letter-spacing: 0.05em;
   word-spacing: 0.155em;
-  text-align: left;
+  text-align: center;
   text-transform: uppercase;
-  margin: 1.25em 0;
+  margin: 0 0 1.25em ;
 
   &:after {
     background-color: #a68677;
     content: '';
     display: block;
     height: 7px;
-    margin: 0.3em 0;
+    margin: 0 auto;
+    width: 104px;
+  }
+}
+
+@media (min-width: 768px) {
+  .heading {
+    display: block;
+    text-align: left;
+    margin: 1.25em 0;
+  }
+
+  .heading:after {
     width: 52px;
+    margin: 0.3em 0;
   }
 }

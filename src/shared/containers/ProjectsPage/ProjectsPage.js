@@ -25,7 +25,7 @@ export class Projects extends React.Component {
   renderProject = ({ id, title, excerpt, slug }) => (
     <div key={id}>
       <Link to={getPath('project', { slug })}>
-        <h2>{title}</h2>
+        <WYSIWYG content={title} element="h2" />
       </Link>
       <WYSIWYG content={excerpt}/>
     </div>

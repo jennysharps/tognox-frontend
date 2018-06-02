@@ -11,9 +11,9 @@ const GridItem = ({
   backgroundImg,
   className = '',
   children,
-  imageMeta: { url: imgUrl, width, height, alt } = {},
   link,
 }) => {
+  const { url: imgUrl, width, height, alt } = backgroundImg || {}
   const content = (
     <Fragment>
       {backgroundImg && (

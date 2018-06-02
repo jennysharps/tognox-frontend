@@ -1,20 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { getSettings } from '../../ducks/settings/settings'
 import { fetchPage, getPage } from '../../ducks/pages'
 import Carousel from '../../components/Carousel'
-import ProjectGrid from '../../components/ProjectGrid'
 import GridItem from '../../components/GridItem'
 import ContentSection from '../../components/ContentSection'
+import ContentWrapper from '../../components/ContentWrapper'
 import SEO from '../../components/SEO'
 
 import profileImg from './media/francesco_avatar.jpg?sizes=250w'
-import placeholder from './media/placeholder.jpg'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
 import ContentGrid from '../../components/ContentGrid'
+import IconGridContent from '../../components/IconGridContent'
 import { getPath } from '../../utils/pathUtils'
 
 import styles from './HomePage.scss'
@@ -22,9 +21,9 @@ import styles from './HomePage.scss'
 const profileImgSrc = profileImg.sources['250w']
 
 const isRequiredDataAvailable = ({
-  aboutTitle,
+  aboutBlurb,
   carouselItems
-}) => !!(aboutTitle && carouselItems && carouselItems.length)
+}) => !!(aboutBlurb && carouselItems && carouselItems.length)
 
 export class Home extends React.Component {
   constructor(props) {
@@ -72,24 +71,6 @@ export class Home extends React.Component {
     </div>
   )
 
-  renderHobbyItem = ({ name, icon }, i) => (
-    <div
-      className={styles.item}
-      key={`${name}-${i}`}
-    >
-      {icon &&
-        <div className={styles.iconWrapper}>
-          <img
-            alt={name}
-            className={styles.icon}
-            src={icon}
-          />
-        </div>
-      }
-      <h2 className={styles.name}>{name}</h2>
-    </div>
-  )
-
   renderProjectItem = ({ id, imageMeta, link, title }) => (
     <GridItem
       key={id}
@@ -108,6 +89,7 @@ export class Home extends React.Component {
   )
 
   render () {
+    const { ready } = this.state;
     const {
       aboutBlurb,
       description,
@@ -125,9 +107,9 @@ export class Home extends React.Component {
 
     return (
       <div>
-        <SEO {...seo} />
+        <SEO {...seo} loading={!ready} />
         <div className={styles.titleBackground} />
-        <div className={styles.titleContentWrapper}>
+        <ContentWrapper className={styles.titleContentWrapper}>
           <div className={styles.titleWrapper}>
             <h1 className={styles.title}>
               {title}
@@ -136,17 +118,15 @@ export class Home extends React.Component {
               {description}
             </h2>
           </div>
-        </div>
-        <div className={styles.contentWrapper}>
+        </ContentWrapper>
+        <ContentWrapper>
           <div className={styles.headShotWrapper}>
             <img
               className={styles.headShot}
               src={profileImgSrc}
             />
           </div>
-          <div
-            className={styles.aboutContent}
-          >
+          <div className={styles.aboutContent}>
             <Carousel className={styles.aboutCarousel}>
               <div>
                 <ContentSection
@@ -167,29 +147,18 @@ export class Home extends React.Component {
                 </ContentSection>
               </div>
               <div>
-                <ContentSection heading="Hobbies & Interests">
-                  <div className={classnames(styles.fitContent, styles.aboutHobbies)}>
-                    {hobbies && hobbies.map(this.renderHobbyItem)}
-                  </div>
-                </ContentSection>
+                <IconGridContent
+                  heading="Hobbies & Interests"
+                  content={hobbies}
+                />
               </div>
             </Carousel>
           </div>
-        </div>
-        <div className={classnames(styles.contentWrapper, styles.alternate)}>
+        </ContentWrapper>
+        <ContentWrapper alternate>
           <div>
             <ContentSection
-              className={styles.content}
-              heading="Projects"
-            >
-              <ProjectGrid content={projects} />
-            </ContentSection>
-          </div>
-        </div>
-        <div className={styles.contentWrapper}>
-          <div>
-            <ContentSection
-              className={classnames(styles.content, styles.projects)}
+              className={styles.projects}
               heading="Projects"
             >
               <ContentGrid>
@@ -197,8 +166,8 @@ export class Home extends React.Component {
               </ContentGrid>
             </ContentSection>
           </div>
-        </div>
-        <div className={styles.contentWrapper}>
+        </ContentWrapper>
+        <ContentWrapper>
           <div>
             <ContentSection
               className={styles.content}
@@ -209,14 +178,16 @@ export class Home extends React.Component {
               </ContentGrid>
             </ContentSection>
           </div>
-        </div>
+        </ContentWrapper>
         {quote && (
-          <figure>
-            <blockquote>
-              <p>Quote: {quote}</p>
-            </blockquote>
-            <figcaption>{attribution}</figcaption>
-          </figure>
+          <ContentWrapper alternate>
+            <figure>
+              <blockquote>
+                <p>Quote: {quote}</p>
+              </blockquote>
+              <figcaption>{attribution}</figcaption>
+            </figure>
+          </ContentWrapper>
         )}
       </div>
     )
@@ -232,12 +203,6 @@ Home.contextTypes = {
   store: PropTypes.shape({
     dispatch: PropTypes.func
   })
-}
-
-Home.defaultProp = {
-  seo: {
-    title: 'Loading...'
-  }
 }
 
 Home.propTypes = {
@@ -272,7 +237,7 @@ Home.propTypes = {
   projects: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
-      imageAlt: PropTypes.shape({
+      imageMeta: PropTypes.shape({
         alt: PropTypes.string,
         height: PropTypes.number,
         width: PropTypes.number,
