@@ -1,13 +1,12 @@
 language: node_js
 node_js:
-- node
+  - node
 env:
   global:
-  - SFTP_USER=[user]
+  - SFTP_USER="travis-ci@andytonini.com"
   - SFTP_PASSWORD=[password]
 script:
-- yarn test
-- yarn run build
+  - yarn test
+  - yarn run build
 after_success:
-- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
-- echo "user ${SFTP_USER}"
+  - ./scripts/deploy.sh
