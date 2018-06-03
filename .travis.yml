@@ -8,6 +8,9 @@ env:
 
 cache: yarn
 
+install:
+  - yarn install --ignore-engines
+
 script:
   - yarn test
   - yarn run build
