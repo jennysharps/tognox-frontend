@@ -37,7 +37,6 @@
     "serialize-javascript": "^1.4.0",
     "snakecase-keys": "^1.1.0",
     "source-map-support": "^0.5.0",
-    "srcset-loader": "^2.2.2",
     "unescape": "^1.0.1"
   },
   "devDependencies": {
@@ -113,7 +112,9 @@
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ],
     "moduleNameMapper": {
-      "^react-native$": "react-native-web"
+      "^react-native$": "react-native-web",
+      "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(jpg|gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
     }
   },
   "babel": {

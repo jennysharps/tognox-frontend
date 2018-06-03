@@ -10,15 +10,13 @@ import ContentSection from '../../components/ContentSection'
 import ContentWrapper from '../../components/ContentWrapper'
 import SEO from '../../components/SEO'
 
-import profileImg from './media/francesco_avatar.jpg?sizes=250w'
+import profileImg from './media/francesco_avatar.jpg'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
 import ContentGrid from '../../components/ContentGrid'
 import IconGridContent from '../../components/IconContentGrid'
 import { getPath } from '../../utils/pathUtils'
 
 import styles from './HomePage.scss'
-
-const profileImgSrc = profileImg.sources['250w']
 
 const isRequiredDataAvailable = ({
   aboutBlurb,
@@ -123,7 +121,7 @@ export class Home extends React.Component {
           <div className={styles.headShotWrapper}>
             <img
               className={styles.headShot}
-              src={profileImgSrc}
+              src={profileImg}
             />
           </div>
           <div className={styles.aboutContent}>
