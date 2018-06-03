@@ -1,16 +1,14 @@
 language: node_js
 node_js:
- - "node"
-
+- node
 env:
   global:
-  - 'SFTP_USER=[user]'
-  - 'SFTP_PASSWORD=[password]'
-  - 'SFTP_KEY=[base64-encoded-rsa-key]'
-
+  - SFTP_USER=[user]
+  - SFTP_PASSWORD=[password]
+  - secure: X82nqj6J/w0uamXuLA7ZQMe2CpL4hC/K2/gpD7B5f2ea8lZ+Z1aAKMp0AxIwuJ7eUChhaIlVTsKCaaA/G9TFr7/9JS/xX3NAfmo9vDuzcaDk4jjgxzrXoDS+B8usrC1mv89RtmZ3uEv+j94f69Pt95bDtVAVbcP0E6R8LowX1k2rvbK0vFyBsR8FlAex5SsamEGmgyuCgPvz3q9J52+fq1dpgUGCefoU4fSIbdMP+f5jLSwdEMcrm0fzvsRqMUXm5aj+nvfaZ+0TZ8FpB3pyJwAWF7vF1X7CW5/vY0F5gjcXcKZn23S1dL7dkGWIFSUdBj/ome4dWihdxFf/NRM7x0fGYVeZ+5/a+S15zfrUnibJtBkxHqSUvkTayEFtnPmT1IS5+wJnp4pj7JIdzZA9gzGl5wj56Yrvmq0dQQ1absvxV0jiE6AuceF/OG6gNjOv9ENoVvUAtjt4h9RjwUDI/6vRGTKWeDnRIV3LUBjSn3IVr1pd8hN8ZsfpKQQJyGJtzNDkT7Nmc7iGvuTUF7/c91pTX4kT3S5EySDMWo7UMNl/0Mr2ivMmB9W2vJ2UZE7HyYLaVaWvVZroQSucf3bNt/lhaV1XzQqA4MEtj7ucp5sPzafyRA5pMxCskXxVr+YXtFE7sHkDsbeBYl0Wo3JOpLTlqyFXaTM/sTn2JkI7c18=
 script:
-  - yarn test
-  - yarn run build
-
+- yarn test
+- yarn run build
 after_success:
-  - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+- echo "user ${SFTP_USER}"
