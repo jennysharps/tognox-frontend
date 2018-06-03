@@ -7,7 +7,7 @@
     "nodemon": "nodemon --watch build/server build/server/bundle.js build/server/bundle.js",
     "build-client": "node scripts/build-client.js",
     "build-server": "node scripts/build-server.js",
-    "build": "CI=false npm run build-client && npm run build-server",
+    "build": "CI=false npm run build-client && CI=false npm run build-server",
     "lint": "eslint 'src/**/*.+(js|jsx)'",
     "test": "node scripts/test.js --env=jsdom"
   },
