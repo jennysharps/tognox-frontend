@@ -439,9 +439,9 @@ babel-core@^6.0.0, babel-core@^6.24.0, babel-core@^6.26.0:
     slash "^1.0.0"
     source-map "^0.5.7"
 
-babel-engine-plugin@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/babel-engine-plugin/-/babel-engine-plugin-0.1.2.tgz#44a60ea1862c2bc2f808f14f3a806d1ff8d09394"
+babel-engine-plugin@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/babel-engine-plugin/-/babel-engine-plugin-0.2.1.tgz#1ff66e6c09ea97c57e52aaab1c4696e7a5cf45b8"
   dependencies:
     babel-core "^6.24.0"
     read-pkg-up "^2.0.0"
