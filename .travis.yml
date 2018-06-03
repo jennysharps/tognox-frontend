@@ -2,9 +2,15 @@ language: node_js
 node_js:
  - "node"
 
+env:
+  global:
+  - 'SFTP_USER=[user]'
+  - 'SFTP_PASSWORD=[password]'
+  - 'SFTP_KEY=[base64-encoded-rsa-key]'
+
 script:
   - yarn test
   - yarn run build
 
 after_success:
-  - echo "${base64-encoded-rsa-key}" | base64 --decode >/tmp/sftp_rsa
+  - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
