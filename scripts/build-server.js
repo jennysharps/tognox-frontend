@@ -5,6 +5,7 @@ process.env.BABEL_ENV = 'production';
 process.env.NODE_ENV = 'production';
 
 const assetManifest = require('../build/client/asset-manifest.json');
+
 if (!assetManifest) {
   console.log(chalk.red('No assets-manifest.json found. Did you run the build-client script?.\n'));
 }

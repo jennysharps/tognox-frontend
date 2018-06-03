@@ -8,5 +8,12 @@ env:
 script:
   - yarn test
   - yarn run build
-after_success:
-  - ./scripts/deploy.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: "EFXVRvdQzicfbwWurqatBcTpw1NYkaFUZ/ldHDWJy9m3+jC1YsjuKWAHmWvH2uwqJkDsQeVgmLmPhl5DIYMO9bk37JpOPjtf6IV2NbBbMpLNp+osfUj+r4Obx0ilpPQtJZDkCWkntZb+TzN761cdDY5EsOYSgR4iRYfWPcHim/ndUe2VfNSr0pE2oa6QEJcyATetmvIzCavdV7FyffDEfUI5IODIinhUDgu4WVgttkXfH13W7L+2MUsB3ZMdDTXk1HKjcLP1l9YhaD3WEIi4tK2oZWpywrdfSq5DdcoZdybhcbBjm2Rwrpvo3icza+xBht6Uw2NOTqw+pfkbOHco4pcisB8Zaot/RSpiFfiz/kjv1g+Wuu6/IJnfrT9/lTJkVEtjc0Jo+pJlFgeL4o58Xe2XeGXp4RY7ZsyXXmglWRoIGTIRFl20O3M8j0QT6kUAKYqz1pNWrKxz5l9j90xXECqtWuFMPaaohqSs2l3s2W1rLeoXgbxZH1g12RW2JgvoJNQs2CAo1alinOuR3O4ZbkLICwVfegbMccUpDPkgdk6LrOSjUtr4s8MopnOUIY7zJSzzgd9T6gxTX0lbEdo+WiWoitgv/ZxgNKbL9qc7LkHu+2ZtmW+hjBFHbVbLwmY8U7wl9qZNKh0PbzyJnl1dGfTlm6S/Qj+JVPsvqDO4ZrI="
+  file_glob: true
+  file: build/*
+  skip_cleanup: true
+  on:
+    tags: true
