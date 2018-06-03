@@ -12,7 +12,7 @@ import render from './render'
 import { loadStatus } from '../shared/ducks/status/status'
 import App from '../shared/App'
 
-const reactApp = async (req, res) => {
+const reactApp = async (req, res, next) => {
   try {
     const store = createStore(rootReducer, applyMiddleware(thunk))
     const context = {}

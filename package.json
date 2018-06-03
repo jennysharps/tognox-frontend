@@ -8,6 +8,7 @@
     "build-client": "node scripts/build-client.js",
     "build-server": "node scripts/build-server.js",
     "build": "npm run build-client && npm run build-server",
+    "lint": "eslint 'src/**/*.+(js|jsx)'",
     "test": "node scripts/test.js --env=jsdom"
   },
   "dependencies": {

@@ -120,6 +120,7 @@ export class Home extends React.Component {
         <ContentWrapper>
           <div className={styles.headShotWrapper}>
             <img
+              alt="Francesco Tonini"
               className={styles.headShot}
               src={profileImg}
             />

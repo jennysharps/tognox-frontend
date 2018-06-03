@@ -1,5 +1,5 @@
-import React, { Fragment, createElement } from 'react'
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import placeholder from '../../media/placeholder.jpg'
