@@ -6,8 +6,6 @@ env:
   global:
   - "SFTP_USER=[user]"
 
-cache: yarn
-
 install:
   - yarn install --ignore-engines
 
