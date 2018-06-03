@@ -5,9 +5,9 @@
     "serve": "NODE_ENV=production node ./build/server/bundle.js",
     "start": "node scripts/start.js",
     "nodemon": "nodemon --watch build/server build/server/bundle.js build/server/bundle.js",
-    "build-client": "node scripts/build-client.js",
-    "build-server": "node scripts/build-server.js",
-    "build": "CI=false npm run build-client && CI=false npm run build-server",
+    "build-client": "CI=false node scripts/build-client.js",
+    "build-server": "CI=false node scripts/build-server.js",
+    "build": "npm run build-client && npm run build-server",
     "lint": "eslint 'src/**/*.+(js|jsx)'",
     "test": "node scripts/test.js --env=jsdom"
   },
