@@ -6,7 +6,7 @@ import { fetchPage, getPage } from '../../ducks/pages'
 import SEO from '../../components/SEO'
 import WYSISWG from '../../components/WYSIWYG'
 import ContentWrapper from '../../components/ContentWrapper'
-import IconGridContent from '../../components/IconGridContent'
+import IconContentGrid from '../../components/IconContentGrid'
 import { getPathConfig } from '../../utils/pathUtils'
 
 const { slug: aboutSlug } = getPathConfig('about');
@@ -42,7 +42,7 @@ export class About extends React.Component {
         <h2>{title}</h2>
         <WYSISWG content={content} />
         <ContentWrapper>
-          <IconGridContent
+          <IconContentGrid
             heading="Hobbies & Interests"
             content={hobbies}
           />

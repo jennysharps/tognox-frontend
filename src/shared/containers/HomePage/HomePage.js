@@ -13,7 +13,7 @@ import SEO from '../../components/SEO'
 import profileImg from './media/francesco_avatar.jpg?sizes=250w'
 import WYSIWYG from '../../components/WYSIWYG/WYSIWYG'
 import ContentGrid from '../../components/ContentGrid'
-import IconGridContent from '../../components/IconGridContent'
+import IconGridContent from '../../components/IconContentGrid'
 import { getPath } from '../../utils/pathUtils'
 
 import styles from './HomePage.scss'
