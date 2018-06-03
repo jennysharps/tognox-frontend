@@ -2,6 +2,12 @@ language: node_js
 node_js:
   - "8.9.4"
 
+env:
+  global:
+  - 'SFTP_USER=[user]'
+  - 'SFTP_PASSWORD=[password]'
+  - 'SFTP_KEY=[base64-encoded-rsa-key]'
+
 cache: yarn
   directories:
   - node_modules
@@ -9,3 +15,10 @@ cache: yarn
 script:
   - yarn test
   - yarn run build
+
+after_success:
+- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+# - curl --ftp-create-dirs
+#       -T filename
+#       --key /tmp/sftp_rsa
+#       sftp://${SFTP_USER}:${SFTP_PASSWORD}@example.com/directory/filename
