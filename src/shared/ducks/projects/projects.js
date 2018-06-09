@@ -101,7 +101,6 @@ export function fetchProject(slug) {
     if (!isCacheValid) {
       await fetch(...fetchArgs)
         .then(({ data }) => {
-          console.log('data', data);
           dispatch(loadProjects(data, cacheKey))
         })
     }
