@@ -18,5 +18,5 @@ deploy:
   domain:
     secure: "cIJuA0T+KFKQQxLAmFsi6yOkXFvVpD+RWicktZ2tTVUNOalvygEEYunvX33xBZPsJWB/OSe05k7nGeYI9kyyniAq42h1AXxFBFLbWT7RMWu+HGvHvHIzRb+UGU1lozIAF7pozlhnKWSv9QVmVFYWkPuTEUXBb3ZVH0zoykLtod+zREt+s9YmoUZ15gySkhOL9aD+69Ttmk+VqKIhnG9Atr6RPIsoJldUMdx8jKpqeExkr/DQ6qRZldYt3gIHPIHX0D8gIkKAfK/qeEiKqrpNoVeLifYzrQFzKeZs9vaD1HX7Yx9w8LdC71sSYRlEYL7eCxt7vKjEzGoNad0833U8/8wVo8CE4pYXLD+tZyEtB/qYMtuOs79HRU4uoMmfkYWvKxRZMQlUA+xLneo9MdFv+oV/nTUUDQz7usHhu8GGtTAxVAhfDn9cCnZporFcmo9WPcsGhj6oy5/7wPApVzZ+zF28Mtu3TKp2nJdhkzFaHDSJwF0IWHMF8eO/CWFItpMAVhE30oYXspzx2lUxrlxsFex/dYzLiINcf6bm3GFa6KKTahMAaZiH2aIawLfLfW9fZWQlb3A59fXK7mmHy/qfnSiJbd7IsfVffp6yjjSEWh1Gx+dsAF2h3AE9+zhkGUi3O6h2P/4OlRTiF3bKghzwVaPqqS496OHqkugvMJkKsyE="
   skip_cleanup: true
-  on:
-    branch: "ci-setup"
+  app:
+    ci-setup: tognox-frontend
