@@ -6,8 +6,8 @@ import bodyParser from 'body-parser'
 import reactApp from './app'
 import sendEmail from './mailer'
 
-const host = process.env.OPENSHIFT_NODEJS_IP || 'localhost'
-const serverPort = process.env.OPENSHIFT_NODEJS_PORT || 8080
+const host = process.env.HOST || 'localhost'
+const serverPort = process.env.PORT || 8080
 
 const app = express()
 
