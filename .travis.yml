@@ -1,19 +1,20 @@
 language: node_js
 node_js:
-- node
+  - node
 env:
   global:
-  - SFTP_USER="travis-ci@andytonini.com"
-  - SFTP_PASSWORD=[password]
-  - secure: mobRkuoPUgFjBumxdAfIMb96n0DiqonsUKfKlPgZrwYssNzsaZiL+/tw+cwoMn0nO+2QkVBoagKy77VTQR9mutlK1FX3bk8bZblzdBlG0nFIPCbpjr+RCd4cj2LP64VPAWFiTVPE6Sonnkk9u5rNre9Ef4f9loFnntRnd5tg1ZYcL6C8JgZXQxBWd/nGwoWHj/hEsXf+5O/IihoDyrK1bB96R+4JZW4M6/uDVNH4Oo3llXcnlGgLJCWpMgRiiCVbVwU/TMFCgCq1GOrBUMJoG/LACtTIU5nfUcaNEvry/JgWO4oEBuZokAizc3VKlYryZlVni8R0aUPLsy+jvBNpAY4iV1XMbpw/GByZ5EqXDxJUjxPRhGkbFPDstvIiSbsDdQ0LnH5vvAwgRUbpDtaSvfBpEmL+kNPSfZJiapfqBn41nofXXS+By45q73QKf33kyaouWoeHHDT9DmX1DD23gnC6MeRzka7o8S3kyAOuu4I3cptMMm+WsUIooE2lZRqDZ9pVDXUx3rkY+LyHTwRUL7M5qvUXWfP6K+zQP4yVdfqlo6sjGxIIiBkbX0X6oY5kdeBMX8x6WDSqGJ1EG1Jk8wwHLJAock9It+UC+Zv/TcV9oSpSrdmPAziGEPqgWoOSemdt49CCDQxeGC36riJGe0CaIchUcVHoYiFiJpHd3eY=
+    - SFTP_USER="travis-ci@andytonini.com"
+    - SFTP_PASSWORD=[password]
+    - secure: mobRkuoPUgFjBumxdAfIMb96n0DiqonsUKfKlPgZrwYssNzsaZiL+/tw+cwoMn0nO+2QkVBoagKy77VTQR9mutlK1FX3bk8bZblzdBlG0nFIPCbpjr+RCd4cj2LP64VPAWFiTVPE6Sonnkk9u5rNre9Ef4f9loFnntRnd5tg1ZYcL6C8JgZXQxBWd/nGwoWHj/hEsXf+5O/IihoDyrK1bB96R+4JZW4M6/uDVNH4Oo3llXcnlGgLJCWpMgRiiCVbVwU/TMFCgCq1GOrBUMJoG/LACtTIU5nfUcaNEvry/JgWO4oEBuZokAizc3VKlYryZlVni8R0aUPLsy+jvBNpAY4iV1XMbpw/GByZ5EqXDxJUjxPRhGkbFPDstvIiSbsDdQ0LnH5vvAwgRUbpDtaSvfBpEmL+kNPSfZJiapfqBn41nofXXS+By45q73QKf33kyaouWoeHHDT9DmX1DD23gnC6MeRzka7o8S3kyAOuu4I3cptMMm+WsUIooE2lZRqDZ9pVDXUx3rkY+LyHTwRUL7M5qvUXWfP6K+zQP4yVdfqlo6sjGxIIiBkbX0X6oY5kdeBMX8x6WDSqGJ1EG1Jk8wwHLJAock9It+UC+Zv/TcV9oSpSrdmPAziGEPqgWoOSemdt49CCDQxeGC36riJGe0CaIchUcVHoYiFiJpHd3eY=
 script:
-- yarn test
-- yarn run build
+  - yarn test
+  - yarn run build
 deploy:
   provider: heroku
   api_key:
       secure: "XSrGHDQX8uH/BDiMjRKp+LXyDq30VkzJZbAksLejFMBosWA+gn4s5mASXvsyaU7AKWTR/XE/57v4IkkRHdHHfW8oq78h2nS8ei+EbE6QT3PHYNO2bRZz2+UmUYVA8EemqNcy1I9HUVc3amltVIjJ8v9xRo+ovkDWGx5v2GgnltD5raQDLr6VRATC2whM4mBMNB4bK1T0bS1e8oI7Q+15kP06EdPctS8ZZhD8GW9n0d79kg+QI5Crp7QjJkRMerx3WKC8ir73aaat7xGNPeIubx4zP9b9BocBXVjNoe10EUlCtH0o8h16tRc6qKimpol7B47F+FYVqAXdKpvoXi55rFzm9yDLxpPSv0KJjDPQSBjuDqz9BD5NuBo8nDIyMVhEmv8QFMg43AuRhNEqgxtPyCwktW6oExI5uT8OFXwLLOn7CUvlXNmXA9Bu6Khg16/VeiNU4zG9OtWSZSoumTh7BWU6SK1e+s1DT7Q2Gpvcph73VG0xV2Qa20uPW7Q6B8Q1FsnaxJGSG9SXgfoHwa/ThcnQYm0xDc5jLAXybDfOCO8j1+NvqYipRJEFg/aE0+z8UJwBUFXnB4fv9MZYWf7h53nBU7PAJisOw5XEfy8qxOnCCVGbg7z/PwAyIjuKLALMZPqAjgWmBCblwVR77uSOJWJfbcnmiISX+CWzn5e2+PU="
   skip_cleanup: true
-  branch: ci-setup
   run:
     - "npm run stop & npm run start"
+  on:
+    branch: ci-setup
