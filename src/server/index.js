@@ -46,3 +46,4 @@ app.use(reactApp)
 
 app.listen(serverPort, host)
 console.log(`Listening at http://${host}:${serverPort}`)
+console.log('process.env', process.env);
