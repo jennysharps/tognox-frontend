@@ -44,6 +44,7 @@ app.use('/', express.static('build/client'))
 
 app.use(reactApp)
 
-app.listen(serverPort, host)
+app.listen(serverPort, host, () => {
+  console.log('process.env', process.env, `PUBLIC_URL: ${process.env.PUBLIC_URL}`);
+})
 console.log(`Listening at http://${host}:${serverPort}`)
-console.log('process.env', process.env);
