@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import reactApp from './app'
 import sendEmail from './mailer'
 
-const host = process.env.HOST || 'localhost'
+const host = process.env.HOST || '0.0.0.0'
 const serverPort = process.env.PORT || 8080
 
 const app = express()
@@ -44,5 +44,5 @@ app.use('/', express.static('build/client'))
 
 app.use(reactApp)
 
-app.listen(serverPort)
+app.listen(serverPort, host)
 console.log(`Listening at http://${host}:${serverPort}`)
