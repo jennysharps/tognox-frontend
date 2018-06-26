@@ -1,1 +1,1 @@
-web: yarn start --debug=9090
+web: yarn serve --debug=9090

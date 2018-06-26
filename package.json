@@ -2,12 +2,9 @@
   "name": "@jls/tognox-frontend",
   "version": "0.1.0",
   "main": "./build/server/bundle.js",
-  "proxy": "http://localhost:5000",
   "scripts": {
     "serve": "NODE_ENV=production node ./build/server/bundle.js",
-    "start": "NODE_ENV=production forever start --minUptime 1000 --spinSleepTime 1000 ./build/server/bundle.js",
-    "stop": "forever stop ./build/server/bundle.js",
-    "start:dev": "node scripts/start.js",
+    "start": "node scripts/start.js",
     "nodemon": "nodemon --watch build/server build/server/bundle.js build/server/bundle.js",
     "build-client": "node scripts/build-client.js",
     "build-server": "node scripts/build-server.js",

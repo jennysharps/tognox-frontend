@@ -7,7 +7,7 @@ import reactApp from './app'
 import sendEmail from './mailer'
 
 const host = process.env.HOST || '0.0.0.0'
-const serverPort = process.env.PORT || 8080
+const serverPort = process.env.PORT || 3000
 
 const app = express()
 
